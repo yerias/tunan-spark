@@ -1,0 +1,3 @@
+[16/02/2020:01:01:49 +0800]	165.10.167.126	-	331	-	put	https://www.bilibili.com/video/av52167219?wd=spark	200	351	7738	HIT
+[16/02/2020:01:01:49 +0800]	165.0.246.128	-	455	-	put	https://www.bilibili.com/video/av52167219?wd=spark	400	6070	1672	MISS
+[16/02/2020:01:01:49 +0800]	165.14.130.23	-	498	-	get	http://www.ruozedata.com	200	9625	-	MISS
