@@ -14,7 +14,7 @@ public class IpParseUtil {
     public static String[] IpParse(String ip){
 
         String[] list = new String[4];
-        //指定纯真数据库的文件名，所在文件夹s
+        //指定纯真数据库的文件名，所在文件夹
         String ips = GetIPRegion.GetipRegionInfo(ip);
         String[] split = ips.split("\\|");
         list[0]=split[0];

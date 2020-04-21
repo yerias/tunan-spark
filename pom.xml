@@ -16,6 +16,7 @@
         <module>tunan-spark-delta</module>
         <module>tunan-spark-hbase</module>
         <module>tunan-spark-utils</module>
+        <module>tunan-spark-mysql</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,24 +26,62 @@
         <scala.version>2.12.10</scala.version>
         <scala.tools.version>2.12</scala.tools.version>
         <spark.version>2.4.5</spark.version>
+        <mysql.jdbc.version>5.1.38</mysql.jdbc.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-streaming_${scala.tools.version}</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.lionsoul</groupId>
+                <artifactId>ip2region</artifactId>
+                <version>1.7.2</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.hadoop</groupId>
                 <artifactId>hadoop-client</artifactId>
                 <version>${hadoop.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-core -->
             <dependency>
                 <groupId>org.apache.spark</groupId>
                 <artifactId>spark-core_${scala.tools.version}</artifactId>
                 <version>${spark.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-sql_${scala.tools.version}</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.lionsoul</groupId>
                 <artifactId>ip2region</artifactId>
                 <version>1.7.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
+            <!--spark操作hive依赖包-->
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-hive_${scala.tools.version}</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.typesafe</groupId>
+                <artifactId>config</artifactId>
+                <version>1.2.1</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.jdbc.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -51,6 +90,10 @@
         <repository>
             <id>cloudera</id>
             <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+            <!--允许发布版本，禁止快照版-->
+            <releases>
+                <enabled>true</enabled>
+            </releases>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -70,5 +113,45 @@
             </snapshots>
         </repository>
     </repositories>
-
+    <build>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scalaVersion>${scala.version}</scalaVersion>
+                    <args>
+                        <arg>-target:jvm-1.8</arg>
+                    </args>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <configuration>
+                    <downloadSources>true</downloadSources>
+                    <buildcommands>
+                        <buildcommand>ch.epfl.lamp.sdt.core.scalabuilder</buildcommand>
+                    </buildcommands>
+                    <additionalProjectnatures>
+                        <projectnature>ch.epfl.lamp.sdt.core.scalanature</projectnature>
+                    </additionalProjectnatures>
+                    <classpathContainers>
+                        <classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
+                        <classpathContainer>ch.epfl.lamp.sdt.launching.SCALA_CONTAINER</classpathContainer>
+                    </classpathContainers>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

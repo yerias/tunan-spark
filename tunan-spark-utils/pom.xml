@@ -15,14 +15,27 @@
     <packaging>jar</packaging>
 
     <dependencies>
-<!--        <dependency>
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-client</artifactId>
         </dependency>
-        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.spark/spark-core &ndash;&gt;
+
         <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_${scala.tools.version}</artifactId>
-        </dependency>-->
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.typesafe</groupId>
+            <artifactId>config</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
     </dependencies>
 </project>

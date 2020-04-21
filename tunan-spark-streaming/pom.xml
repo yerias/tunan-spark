@@ -13,4 +13,15 @@
     <artifactId>tunan-spark-streaming</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_${scala.tools.version}</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.tunan.spark</groupId>
+            <artifactId>tunan-spark-utils</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 </project>

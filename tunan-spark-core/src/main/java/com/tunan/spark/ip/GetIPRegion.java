@@ -8,12 +8,13 @@ import org.lionsoul.ip2region.Util;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.math.BigInteger;
 
 public class GetIPRegion {
 
     public static String GetipRegionInfo(String ip){
         String dbPath = GetIPRegion.class.getResource("/ip2region.db").getPath();
-//        String dbPath = SparkFiles.get("/ip2region.db");
+//        String dbPath = SparkFiles.get("ip2region.db");
 
         //String dbPath = "ip/ip2region.db";
         File file = new File(dbPath);
