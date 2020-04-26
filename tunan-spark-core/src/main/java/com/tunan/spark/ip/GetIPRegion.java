@@ -1,6 +1,5 @@
 package com.tunan.spark.ip;
 
-import org.apache.spark.SparkFiles;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
@@ -8,7 +7,6 @@ import org.lionsoul.ip2region.Util;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.math.BigInteger;
 
 public class GetIPRegion {
 

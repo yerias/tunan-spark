@@ -27,20 +27,41 @@
         <scala.tools.version>2.12</scala.tools.version>
         <spark.version>2.4.5</spark.version>
         <mysql.jdbc.version>5.1.38</mysql.jdbc.version>
+        <scalikejdbc.version>3.3.2</scalikejdbc.version>
+        <jedis.version>2.9.0</jedis.version>
+        <config.version>1.2.1</config.version>
+
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!--redis依赖-->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+            <!--scalikejdbc相关依赖-->
+            <dependency>
+                <groupId>org.scalikejdbc</groupId>
+                <artifactId>scalikejdbc_${scala.tools.version}</artifactId>
+                <version>${scalikejdbc.version}</version>
+            </dependency>
+            <!--scalikejdbc相关依赖-->
+            <dependency>
+                <groupId>org.scalikejdbc</groupId>
+                <artifactId>scalikejdbc-config_${scala.tools.version}</artifactId>
+                <version>${scalikejdbc.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.spark</groupId>
                 <artifactId>spark-streaming_${scala.tools.version}</artifactId>
                 <version>${spark.version}</version>
             </dependency>
-
-
             <dependency>
-                <groupId>org.lionsoul</groupId>
-                <artifactId>ip2region</artifactId>
-                <version>1.7.2</version>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-streaming-kafka-0-10_${scala.tools.version}</artifactId>
+                <version>${spark.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.hadoop</groupId>
@@ -57,11 +78,13 @@
                 <artifactId>spark-sql_${scala.tools.version}</artifactId>
                 <version>${spark.version}</version>
             </dependency>
+            <!--操作ip库的-->
             <dependency>
                 <groupId>org.lionsoul</groupId>
                 <artifactId>ip2region</artifactId>
                 <version>1.7.2</version>
             </dependency>
+            <!--操作scala的-->
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-library</artifactId>
@@ -73,6 +96,7 @@
                 <artifactId>spark-hive_${scala.tools.version}</artifactId>
                 <version>${spark.version}</version>
             </dependency>
+            <!--操作外部配置文件的-->
             <dependency>
                 <groupId>com.typesafe</groupId>
                 <artifactId>config</artifactId>

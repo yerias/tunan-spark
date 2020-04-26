@@ -13,4 +13,21 @@
     <artifactId>tunan-spark-streaming-kafka</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming-kafka-0-10_${scala.tools.version}</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.12</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.tunan.spark</groupId>
+            <artifactId>tunan-spark-utils</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
+
 </project>

@@ -1,6 +1,6 @@
 package com.tunan.spark.wc
 
-import com.tunan.hadoop.CheckHDFSOutPath
+import com.tunan.spark.utils.hadoop.CheckHDFSOutPath
 import org.apache.hadoop.conf.Configuration
 import org.apache.spark.{SparkConf, SparkContext}
 
