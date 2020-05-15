@@ -4,10 +4,17 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 import com.hadoop.compression.lzo.LzopCodec
+import com.hadoop.mapreduce.LzoTextInputFormat
 import com.tunan.spark.utils.{ContextUtils, IpParseUtil}
 import com.tunan.spark.utils.hadoop.CheckHDFSOutPath
 import org.apache.commons.lang3.StringUtils
-import org.apache.hadoop.io.compress.SnappyCodec
+import org.apache.hadoop.io.{LongWritable, Text}
+import org.apache.hadoop.io.compress.{Lz4Codec, SnappyCodec}
+import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.broadcast.Broadcast
+import org.apache.spark.rdd.RDD
+
+import scala.collection.mutable
 
 /**
  * [16/02/2020:01:01:49 +0800]	165.10.167.126	-	331	-	put	https://www.bilibili.com/video/av52167219?wd=spark	200	351	7738	HIT
@@ -27,30 +34,46 @@ import org.apache.hadoop.io.compress.SnappyCodec
 
 object accessV2 {
 
+    var in = "tunan-spark-core/ip/access.txt"
+    var out = "tunan-spark-sql/out"
+    var user = "tunan-spark-core/ip/userid.txt"
+
+
     def main(args: Array[String]): Unit = {
 
-        val sc = ContextUtils.getSparkContext(this.getClass.getSimpleName)
+        if (args.length > 1) {
+            in = args(0)
+            out = args(1)
+            user = args(2)
+        }
 
-        sc.hadoopConfiguration.set("dfs.blocksize","67108864")
+//        val sc = ContextUtils.getSparkContext(this.getClass.getSimpleName)
 
-        //        val conf = new SparkConf()
-        //        val sc = new SparkContext(conf)
+        val conf = new SparkConf()//.setMaster("local[2]").setAppName(this.getClass.getSimpleName)
+        val sc = new SparkContext(conf)
 
-        val in = "tunan-spark-core/ip/access.txt"
-        val out = "tunan-spark-sql/extds/text_access"
-        CheckHDFSOutPath.ifExistsDeletePath(sc.hadoopConfiguration,out)
+        CheckHDFSOutPath.ifExistsDeletePath(sc.hadoopConfiguration, out)
 
-        val userTextRDD = sc.textFile("tunan-spark-sql/extds/userid.txt")
+        val userTextRDD = sc.textFile(user)
 
-        val hashMap = sc.broadcast(userTextRDD.map(x => {
+        val hashMap: Broadcast[collection.Map[String, String]] = sc.broadcast(userTextRDD.map(x => {
             val words = x.split(",")
             (words(2), words(0))
         }).collectAsMap())
 
 
-        val linesRDD = sc.textFile(in)
+        val linesRDD: RDD[String] = sc.newAPIHadoopFile(in, classOf[LzoTextInputFormat], classOf[LongWritable], classOf[Text])
+          .map(x => x._2.toString)
+//        val linesRDD = sc.textFile(in)
 
-        val mapRDD: Unit = linesRDD.map(line => {
+
+        etl(linesRDD,hashMap)
+          .filter(x => x.responseSize != 0).saveAsTextFile(out,classOf[LzopCodec])
+    }
+
+
+    def etl(linesRDD: RDD[String],hashMap:Broadcast[collection.Map[String, String]]): RDD[etlBean] = {
+        linesRDD.map(line => {
             val fields = line.split("\t")
 
             //时间
@@ -116,9 +139,9 @@ object accessV2 {
 
             var userId = 0L
             try {
-                userId  = hashMap.value(domain).toLong
+                userId = hashMap.value(domain).toLong
             } catch {
-                case e:Exception => userId = 0L
+                case e: Exception => userId = 0L
             }
 
             //path  ==> 空的怎么处理
@@ -146,26 +169,15 @@ object accessV2 {
             //是否命中缓存
             val cache = fields(10)
 
-            etl(year, month, day, country, province, city, area, proxy_ip, requestTime, referer, method, http, domain, path, httpCode, requestSize, responseSize, cache,userId)
-        }).filter(x => x.responseSize != 0).saveAsTextFile(out,classOf[LzopCodec])
-        //输出结果
-        //        mapRDD.print()
-
-
-        //城市统计
-        /*val provinceRDD = mapRDD.map(x => (x.country, x.responseSize))
-        val reduceByRDD = provinceRDD.reduceByKey(_ + _)
-        reduceByRDD.map(x => {
-            country(x._1, x._2)
-        }).coalesce(1).saveAsTextFile(out)*/
+            etlBean(year, month, day, country, province, city, area, proxy_ip, requestTime, referer, method, http, domain, path, httpCode, requestSize, responseSize, cache, userId)
+        })
     }
 
-    case class etl(year: String, month: String, day: String, country: String, province: String, city: String, area: String, proxy_ip: String, requestTime: Long, referer: String, method: String, http: String, domain: String, path: String, httpCode: String, requestSize: Long, responseSize: Long, cache: String, userId: Long) {
+    case class etlBean(year: String, month: String, day: String, country: String, province: String, city: String, area: String, proxy_ip: String, requestTime: Long, referer: String, method: String, http: String, domain: String, path: String, httpCode: String, requestSize: Long, responseSize: Long, cache: String, userId: Long) {
         override def toString: String = s"$year, $month, $day, $country, $province, $city, $area, $proxy_ip, $requestTime, $referer, $method, $http, $domain, $path, $httpCode, $requestSize, $responseSize, $cache,$userId"
     }
 
     case class country(country: String, responseSize: Long) {
         override def toString: String = s"$country --> $responseSize"
     }
-
 }

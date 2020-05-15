@@ -31,7 +31,7 @@ object Offsets2Redis {
             "key.deserializer" -> classOf[StringDeserializer],
             "value.deserializer" -> classOf[StringDeserializer],
             "group.id" -> GROUPED,
-            "auto.offset.reset" -> AUSTEREST, //latest
+            "auto.offset.reset" -> AUSTEREST, //latest、earliest
             "enable.auto.commit" -> (false: java.lang.Boolean)
         )
 
@@ -73,6 +73,8 @@ object Offsets2Redis {
                     for (pair <- result) {
                         pipeline.hincrBy("wc_redis_ss", pair._1, pair._2)
                     }
+
+                    1/0
 
                     // 写offset
                     offsetRanges.foreach(o => {

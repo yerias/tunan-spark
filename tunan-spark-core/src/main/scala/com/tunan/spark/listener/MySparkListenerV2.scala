@@ -1,7 +1,6 @@
 package com.tunan.spark.listener
 
 import com.tunan.spark.utils.mail.MsgUtils
-import com.tunan.spark.utils.mysql.listener.{Listener, ListenerCURD}
 import org.apache.spark.SparkConf
 import org.apache.spark.internal.Logging
 import org.apache.spark.scheduler.{SparkListener, SparkListenerJobStart, SparkListenerTaskEnd}

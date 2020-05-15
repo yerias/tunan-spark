@@ -3,9 +3,10 @@ package com.tunan.spark.etl
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-import com.tunan.spark.utils.{ContextUtils, IpParseUtil}
+import com.tunan.spark.utils.IpParseUtil
 import com.tunan.spark.utils.hadoop.CheckHDFSOutPath
 import org.apache.commons.lang3.StringUtils
+import org.apache.spark.{SparkConf, SparkContext}
 
 /**
  * [16/02/2020:01:01:49 +0800]	165.10.167.126	-	331	-	put	https://www.bilibili.com/video/av52167219?wd=spark	200	351	7738	HIT
@@ -27,7 +28,8 @@ object access {
 
     def main(args: Array[String]): Unit = {
 
-        val sc = ContextUtils.getSparkContext(access.getClass.getSimpleName)
+        val conf = new SparkConf().setMaster("local[*]").setAppName(this.getClass.getSimpleName)
+        val sc = new SparkContext(conf)
 
 //        val conf = new SparkConf()
 //        val sc = new SparkContext(conf)
@@ -130,17 +132,17 @@ object access {
             val cache = fields(10)
 
             etl(year,month,day,country,province,city,area,proxy_ip,requestTime,referer,method,http,domain,path,httpCode,requestSize,responseSize,cache)
-        }) .filter(x=>x.responseSize!=0).saveAsTextFile(out)
+        }) .filter(x=>x.responseSize!=0)
         //输出结果
         //        mapRDD.print()
 
 
         //城市统计
-/*        val provinceRDD = mapRDD.map(x => (x.country,x.responseSize))
+        val provinceRDD = mapRDD.map(x => (x.country,x.responseSize))
         val reduceByRDD = provinceRDD.reduceByKey(_ + _)
         reduceByRDD.map(x => {
             country(x._1,x._2)
-        }).coalesce(1).saveAsTextFile(out)*/
+        }).coalesce(1).saveAsTextFile(out)
     }
 
     case class etl(year: String,month: String,day: String,country: String,province: String,city: String,area: String,proxy_ip: String,requestTime: Long,referer: String,method: String,http: String,domain: String,path: String,httpCode: String,requestSize: Long,responseSize: Long,cache: String) {

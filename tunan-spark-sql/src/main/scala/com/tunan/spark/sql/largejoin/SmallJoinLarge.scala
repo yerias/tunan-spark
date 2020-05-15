@@ -21,8 +21,8 @@ object SmallJoinLarge extends Logging{
     val userRDD = sc.textFile("tunan-spark-sql/moke2/user_click.txt")
     val productRDD = sc.textFile("tunan-spark-sql/moke2/product_category.txt")
 
-    val userRepartitionRDD: RDD[String] = userRDD.repartition(10)
-    val productRepartitionRDD: RDD[String] = productRDD.repartition(10)
+    val userRepartitionRDD = userRDD.repartition(10)
+    val productRepartitionRDD = productRDD.repartition(10)
 
     val userMapRDD = userRepartitionRDD.mapPartitions(partition => {
       partition.map(row => {
@@ -42,12 +42,13 @@ object SmallJoinLarge extends Logging{
     // 分区内有序，全局也有序
     implicit val order: Ordering[(Long, Long)] = Ordering[(Long)].on[(Long, Long)](x => x._1)
 
+    //排序
 //    val userSortBy = userMapRDD.sortBy(x => x)
 //    val productSortBy = productMapRDD.sortBy(x => x)
 
     val joinRDD = userMapRDD.join(productMapRDD)
 
-    joinRDD.map( x=> s"${x._2._1},${x._2._2}").saveAsTextFile(out)
+    joinRDD.map( x=> s"${x._2._1},${x._2._2}").take(10)//.saveAsTextFile(out)
 
     val end = System.currentTimeMillis()
     log.error("一共使用时间："+(end-start)+"ms======================================================")

@@ -16,7 +16,9 @@
         <module>tunan-spark-delta</module>
         <module>tunan-spark-hbase</module>
         <module>tunan-spark-utils</module>
-        <module>tunan-spark-mysql</module>
+        <module>tunan-spark-presto</module>
+        <module>tunan-hadoop-flume</module>
+        <module>tunan-java</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,10 +32,46 @@
         <scalikejdbc.version>3.3.2</scalikejdbc.version>
         <jedis.version>2.9.0</jedis.version>
         <config.version>1.2.1</config.version>
+        <presto.version>0.233.1</presto.version>
+        <kudu.version>1.7.0</kudu.version>
+        <hbase.version>1.2.0-cdh5.16.2</hbase.version>
 
     </properties>
     <dependencyManagement>
+
         <dependencies>
+            <dependency>
+                <groupId>org.apache.hbase</groupId>
+                <artifactId>hbase-server</artifactId>
+                <version>${hbase.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.hbase</groupId>
+                <artifactId>hbase-client</artifactId>
+                <version>${hbase.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.kudu/kudu-spark2 -->
+            <dependency>
+                <groupId>org.apache.kudu</groupId>
+                <artifactId>kudu-spark2_2.11</artifactId>
+                <version>1.7.0</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.facebook.presto</groupId>
+                <artifactId>presto-jdbc</artifactId>
+                <version>${presto.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.hadoop.gplcompression/hadoop-lzo -->
+            <dependency>
+                <groupId>com.hadoop.gplcompression</groupId>
+                <artifactId>hadoop-lzo</artifactId>
+                <version>0.4.20</version>
+            </dependency>
+
             <!--redis依赖-->
             <dependency>
                 <groupId>redis.clients</groupId>
@@ -110,18 +148,9 @@
         </dependencies>
     </dependencyManagement>
 
+
+
     <repositories>
-        <repository>
-            <id>cloudera</id>
-            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-            <!--允许发布版本，禁止快照版-->
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
         <repository>
             <id>central</id>
             <name>aliyun maven</name>
@@ -136,6 +165,25 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
+        <repository>
+            <id>twitter</id>
+            <url>https://maven.twttr.com/</url>
+        </repository>
+
+        <repository>
+            <id>cloudera</id>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+            <!--允许发布版本，禁止快照版-->
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+
     </repositories>
     <build>
         <sourceDirectory>src/main/scala</sourceDirectory>

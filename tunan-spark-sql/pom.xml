@@ -14,15 +14,22 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.hadoop.gplcompression/hadoop-lzo -->
+        <dependency>
+            <groupId>com.hadoop.gplcompression</groupId>
+            <artifactId>hadoop-lzo</artifactId>
+            <version>0.4.20</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.typesafe</groupId>
+            <artifactId>config</artifactId>
+            <version>1.2.1</version>
+        </dependency>
         <dependency>
             <groupId>org.lionsoul</groupId>
             <artifactId>ip2region</artifactId>
             <version>1.7.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tunan.spark</groupId>
-            <artifactId>tunan-spark-utils</artifactId>
-            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>

@@ -1,6 +1,7 @@
 package com.tunan.spark.sql.largesqljoin
 
 import com.tunan.spark.utils.hadoop.CheckHDFSOutPath
+import org.apache.spark.HashPartitioner
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
 
@@ -29,11 +30,12 @@ object SmallJoinLarge {
         val userRDD = spark.sparkContext.textFile(userTable)
         val productRDD = spark.sparkContext.textFile(productTable)
 
+
         // 分区 分区内hash join
         val repUser = userRDD.repartition(10)
         val repProduct = productRDD.repartition(10)
 
-        val pairRDD= userRDD.mapPartitions(partition => {
+        val pairRDD= repUser.mapPartitions(partition => {
             partition.map(row => {
                 val words = row.split(",")
                 UserProduct(words(1), words(0))
@@ -42,10 +44,9 @@ object SmallJoinLarge {
 
         val userDF = pairRDD.toDF()
         userDF.createOrReplaceTempView("user")
-
         //        userDF.printSchema()
 
-        val productPairRDD = productRDD.mapPartitions(partition => {
+        val productPairRDD = repProduct.mapPartitions(partition => {
             partition.map(row => {
                 val words = row.split(",")
                 ProductCategory(words(0), words(1))
@@ -60,7 +61,7 @@ object SmallJoinLarge {
               |	u.userId,p.categoryId
               |from
               |	user u
-              |left join
+              |inner join
               |	product p
               |on u.productId=p.productId""".stripMargin)
         sql.show()

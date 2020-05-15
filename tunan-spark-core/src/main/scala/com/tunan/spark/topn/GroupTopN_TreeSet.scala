@@ -31,7 +31,7 @@ object GroupTopN_TreeSet {
             }
         }
 
-        val treeSort = mapRDD.reduceByKey(new MyPartitioner(domains), _ + _).mapPartitions(partition => {
+        val treeSort: Array[((String, String), Int)] = mapRDD.reduceByKey(new MyPartitioner(domains), _ + _).mapPartitions(partition => {
             val set = mutable.TreeSet.empty(ord)
             partition.foreach(x => {
                 set.add(x)

@@ -22,7 +22,11 @@
             <version>0.4.21</version>
         </dependency>-->
 
-
+        <dependency>
+            <groupId>org.apache.kudu</groupId>
+            <artifactId>kudu-spark2_2.11</artifactId>
+            <version>1.7.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.spark</groupId>

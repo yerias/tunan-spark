@@ -1,6 +1,5 @@
 package com.tunan.spark.utils.hadoop
 
-import com.hadoop.mapreduce.LzoTextInputFormat
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.hadoop.io.{LongWritable, Text}
@@ -20,8 +19,10 @@ object MergeFileUtils {
         val out = "tunan-spark-sql/extds/etl-access"
 
 
+/*
         val rdd = sc.newAPIHadoopFile(path,classOf[LzoTextInputFormat],classOf[LongWritable],classOf[Text])
           .map(_._2.toString)
+*/
 
 
         /*

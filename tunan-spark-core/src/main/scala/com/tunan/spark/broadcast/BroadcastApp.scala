@@ -40,9 +40,9 @@ object BroadcastApp {
 
         flights.map(lines => {
             val words = lines.split(",")
-            val a = airportsBC.value.get(words(0)).get
-            val b = airportsBC.value.get(words(1)).get
-            val c = airlinesBC.value.get(words(2)).get
+            val a = airportsBC.value(words(0))
+            val b = airportsBC.value(words(1))
+            val c = airlinesBC.value(words(2))
             a+"    "+b+"    "+c+"    "+words(3)
         }).foreach(println)
         sc.stop()

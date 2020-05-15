@@ -7,7 +7,7 @@ import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
 import org.apache.spark.streaming.kafka010.{HasOffsetRanges, KafkaUtils, OffsetRange}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import redis.clients.jedis.{Jedis, Pipeline}
+import redis.clients.jedis.Jedis
 
 object OffsetsRedis {
 
@@ -16,7 +16,7 @@ object OffsetsRedis {
         val ssc = new StreamingContext(conf, Seconds(5))
 
         // TODO 消费者组
-        val groupId = "use_a_separate_group_id_for_each_stream_3"
+        val groupId = "test_group_id_for_each_stream"
         val kafkaParams = Map[String, Object](
             "bootstrap.servers" -> "hadoop:9090,hadoop:9091,hadoop:9092",
             "key.deserializer" -> classOf[StringDeserializer],
@@ -27,7 +27,7 @@ object OffsetsRedis {
         )
 
         // TODO 拿到topic
-        val topics = Array("test") // topic
+        val topics = Array("tunanA") // topic
 
         // TODO 拿到偏移量
         val fromOffsets = RedisOffsetsManager.obtainOffsets(topics,groupId) //Map[TopicPartition, Long]()
@@ -57,7 +57,9 @@ object OffsetsRedis {
                     // 提交业务逻辑
                     for (pair <- result) {
                         jedis.hincrBy("wc_redis_ss", pair._1, pair._2)
+                        println(pair._1+" "+pair._2)
                     }
+
 
                     // 写offset
                     RedisOffsetsManager.storeOffsets(offsetRanges,groupId)
