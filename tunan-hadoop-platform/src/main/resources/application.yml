@@ -1,0 +1,24 @@
+server:
+    port: 8889
+    servlet:
+        context-path: /platform
+
+spring:
+    datasource:
+        url: jdbc:mysql://hadoop:3306/tunan
+        driver-class-name: com.mysql.jdbc.Driver
+        username: root
+        password: root
+    profiles:
+        active: dev
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+
+tunan:
+    hadoop:
+        nn:
+            url: hadoop:50070
+        rm:
+            url: hadoop:8088

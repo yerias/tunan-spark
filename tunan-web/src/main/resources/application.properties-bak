@@ -1,0 +1,3 @@
+server.port=9999
+server.servlet.context-path=/tunan
+spring.banner.location=banner.txt

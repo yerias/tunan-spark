@@ -1,0 +1,49 @@
+server:
+    port: 9999
+    servlet:
+        context-path: /tunan
+
+spring:
+    banner:
+        location: banner.txt
+    profiles:
+        active: dev
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+    datasource:
+        username: root
+        password: root
+        url: jdbc:mysql://hadoop:3306/tunan
+        driver-class-name: com.mysql.jdbc.Driver
+
+
+student:
+    id: 1
+    name: tunan
+    brithday: 1995/04/20
+    male: false
+    infos:
+        a: zhangsan
+        b: lisi
+    teachers:
+        - wangwu
+        - zhaoliu
+    grade:
+        name: 大数据实战班
+        desc: 给力
+
+---
+server:
+    port: 9997
+
+spring:
+    profiles: dev
+
+---
+server:
+    port: 9998
+
+spring:
+    profiles: prod
