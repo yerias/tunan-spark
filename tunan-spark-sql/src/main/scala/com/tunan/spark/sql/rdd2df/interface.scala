@@ -22,9 +22,9 @@ object interface {
         //创建和上一步对应的行结构类型的StructType
         val innerStruct =
             StructType(
-            StructField("name", StringType, false) ::
-            StructField("subject", StringType, false) ::
-            StructField("grade", DoubleType, false) :: Nil
+                StructField("name", StringType, false) ::
+                  StructField("subject", StringType, false) ::
+                  StructField("grade", DoubleType, false) :: Nil
             )
 
         //将schema和Rows结合，创建出DF

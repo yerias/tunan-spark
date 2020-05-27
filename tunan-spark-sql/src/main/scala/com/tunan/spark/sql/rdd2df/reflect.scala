@@ -17,7 +17,7 @@ object reflect {
             people(words(0), words(1), words(2).toInt)
         })
 
-        mapRDD.toDF().show()
+        mapRDD.toDF().printSchema()
     }
 
     case class people(name:String,subject:String,grade:Int)
