@@ -21,7 +21,6 @@ object OfflineETL {
       out = args(1)
     }
 
-
     etl(spark)
 
     spark.stop()

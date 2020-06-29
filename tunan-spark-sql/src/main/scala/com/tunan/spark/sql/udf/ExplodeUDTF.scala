@@ -27,7 +27,7 @@ object ExplodeUDTF {
     list.add(Row("xiaoqi", "cdh,kafka,hbase"))
 
 
-    val df = spark.createDataFrame(list, schema)
+    val df: DataFrame = spark.createDataFrame(list, schema)
 
 
     val line = new ListBuffer[(String, String)]()

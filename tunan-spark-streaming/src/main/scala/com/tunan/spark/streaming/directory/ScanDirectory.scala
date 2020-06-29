@@ -18,7 +18,7 @@ object ScanDirectory {
     ssc.awaitTermination()
   }
 
-  private def dispose(ssc: StreamingContext) = {
+  private def dispose(ssc: StreamingContext): Unit = {
     //文件输入
     val text = ssc.textFileStream("file:///home/hadoop/app/spark/streaming")
 

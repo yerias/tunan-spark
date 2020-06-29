@@ -35,7 +35,7 @@ object GroupTopN_TreeSet {
             val set = mutable.TreeSet.empty(ord)
             partition.foreach(x => {
                 set.add(x)
-                if (set.size > 2) {
+                if (set.size > 3) {
                     set.remove(set.lastKey) //移除最后一个
                 }
             })

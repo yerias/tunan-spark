@@ -15,7 +15,7 @@ object UpdateState {
     ssc.awaitTermination()
   }
 
-  private def dispose(ssc: StreamingContext) = {
+  private def dispose(ssc: StreamingContext): Unit = {
     val lines = ssc.socketTextStream("hadoop", 9100)
 
     ssc.checkpoint("./chk")
