@@ -11,7 +11,7 @@
 	</property>
 	<property>
 		<name>hive.metastore.uris</name>
-		<value>thrift://hadoop:9083</value>
+		<value>thrift://hadoop101:9083</value>
 		<description>指向的是运行metastore服务的主机</description>
 	</property>
 </configuration>

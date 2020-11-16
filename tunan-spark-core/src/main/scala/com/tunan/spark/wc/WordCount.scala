@@ -9,9 +9,9 @@ object WordCount {
     def main(args: Array[String]): Unit = {
 
         //输入、输出路径
-//        val in = "tunan-spark-core/data/wc.txt"
-//        val out = "tunan-spark-core/out"
-        val (in,out) = (args(0),args(1))
+        val in = "tunan-spark-core/data/wc.txt"
+        val out = "tunan-spark-core/out"
+//        val (in,out) = (args(0),args(1))
 
         //配置conf
         val conf = new SparkConf()

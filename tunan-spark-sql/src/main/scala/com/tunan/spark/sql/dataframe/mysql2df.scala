@@ -1,7 +1,7 @@
 package com.tunan.spark.sql.dataframe
 
 import com.typesafe.config.ConfigFactory
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
 
 object mysql2df {
 
@@ -41,13 +41,15 @@ object mysql2df {
 
         sqlDF.show(false)
         //接着上面返回的sqlDF: DataFrame
-/*        sqlDF.write
+        sqlDF.coalesce(10)
+          .write
+          .mode(SaveMode.Overwrite)
             .format("jdbc")
             .option("url", url)
             .option("dbtable", s"$db.$target")
             .option("user", user)
             .option("password", password)
             .option("driver",driver)
-            .save()*/
+            .save()
     }
 }

@@ -1,6 +1,6 @@
-package com.tunan.spark.streming.kafka.offmanager
+package com.tunan.spark.streming.kafka.offset
 
-import com.tunan.spark.utils.redis.RedisUtils
+import com.tunan.spark.streming.kafka.offmanager.RedisOffsetsManager
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
@@ -16,7 +16,7 @@ object OffsetsRedis {
         val ssc = new StreamingContext(conf, Seconds(5))
 
         // TODO 消费者组
-        val groupId = "test_group_id_for_each_stream"
+        val groupId = "view_group"
         val kafkaParams = Map[String, Object](
             "bootstrap.servers" -> "hadoop:9090,hadoop:9091,hadoop:9092",
             "key.deserializer" -> classOf[StringDeserializer],
@@ -27,7 +27,7 @@ object OffsetsRedis {
         )
 
         // TODO 拿到topic
-        val topics = Array("tunanA") // topic
+        val topics = Array("view_topic") // topic
 
         // TODO 拿到偏移量
         val fromOffsets = RedisOffsetsManager.obtainOffsets(topics,groupId) //Map[TopicPartition, Long]()
@@ -52,7 +52,7 @@ object OffsetsRedis {
                 // 事物写入redis
                 var jedis: Jedis = null
                 try {
-                    jedis = RedisUtils.getJedis
+//                    jedis = RedisUtils.getJedis
 
                     // 提交业务逻辑
                     for (pair <- result) {

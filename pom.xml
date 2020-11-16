@@ -19,6 +19,7 @@
         <module>tunan-spark-presto</module>
         <module>tunan-hadoop-flume</module>
         <module>tunan-java</module>
+        <module>tunan-scala</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,6 +40,11 @@
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.62</version>
+            </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
@@ -173,11 +179,6 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-        </repository>
-
-        <repository>
-            <id>twitter</id>
-            <url>https://maven.twttr.com/</url>
         </repository>
 
         <repository>

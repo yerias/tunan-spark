@@ -9,7 +9,7 @@ object UpdateStateV2 {
   def main(args: Array[String]): Unit = {
 
     // 拿到StreamingContext
-    val ssc  = StreamingContext.getOrCreate(checkpoint, functionToCreateContext)
+    val ssc  = StreamingContext.getOrCreate(checkpoint, functionToCreateContext _)
     ssc.start()
     ssc.awaitTermination()
   }
@@ -17,7 +17,7 @@ object UpdateStateV2 {
   // 创建StreamingContext
   def functionToCreateContext(): StreamingContext = {
     val conf = new SparkConf().setMaster("local[2]").setAppName(this.getClass.getSimpleName)
-    val ssc = new StreamingContext(conf,Seconds(50000))   // new context
+    val ssc = new StreamingContext(conf,Seconds(5))   // new context
 
     dispose(ssc)
 
@@ -26,7 +26,7 @@ object UpdateStateV2 {
   }
 
   // 处理具题的业务逻辑
-  private def dispose(ssc: StreamingContext) = {
+  private def dispose(ssc: StreamingContext): Unit = {
     val lines = ssc.socketTextStream("hadoop", 9100) // create DStreams
 
     lines

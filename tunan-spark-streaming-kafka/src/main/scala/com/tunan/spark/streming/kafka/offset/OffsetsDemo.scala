@@ -19,12 +19,12 @@ object OffsetsDemo {
       "bootstrap.servers" -> "hadoop:9090,hadoop:9091,hadoop:9092",
       "key.deserializer" -> classOf[StringDeserializer],
       "value.deserializer" -> classOf[StringDeserializer],
-      "group.id" -> "use_a_separate_group_id_for_each_stream",
+      "group.id" -> "view_group",
       "auto.offset.reset" -> "earliest", //latest
       "enable.auto.commit" -> (false: java.lang.Boolean)
     )
 
-    val topics = Array("test")
+    val topics = Array("view_topic")
     val stream = KafkaUtils.createDirectStream[String, String](
       ssc,
       PreferConsistent,

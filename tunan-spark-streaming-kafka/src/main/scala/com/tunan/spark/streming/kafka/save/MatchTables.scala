@@ -68,7 +68,7 @@ object MatchTables {
                     try {
                         jedis = RedisUtils.getJedis
                         pipeline = jedis.pipelined()
-                        pipeline.multi(
+                        pipeline.multi()
                         var i: Long = 0
                         partition.foreach(row => {
                             i += 1L

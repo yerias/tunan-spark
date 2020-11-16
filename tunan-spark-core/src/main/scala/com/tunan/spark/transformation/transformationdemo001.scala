@@ -94,7 +94,6 @@ object transformationdemo001 {
 
         //mapRDD.mapValues(x=>x).print()
 
-
         //        mapRDD.mapValues(x=>x).sum()
     }
 }

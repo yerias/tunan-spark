@@ -51,7 +51,7 @@ object RedisOffsetsManager extends OffsetsManager {
         } catch {
             case e:Exception => e.printStackTrace()
         } finally {
-            // 关闭jedis0
+            // 关闭jedis
 
             jedis.close()
         }

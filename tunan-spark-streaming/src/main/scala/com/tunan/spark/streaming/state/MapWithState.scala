@@ -38,7 +38,7 @@ object MapWithState {
           .flatMap(_.split(" "))
           .map((_, 1))
           .mapWithState(StateSpec.function(mappingFunc)
-            .timeout(Seconds(3))
+          .timeout(Seconds(3))
           ).print()
 
         ssc

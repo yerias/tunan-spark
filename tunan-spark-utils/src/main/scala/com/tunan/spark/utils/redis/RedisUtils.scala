@@ -16,7 +16,6 @@ object RedisUtils {
   private val TESTONBORROW: Boolean = conf.getBoolean("redis.TestOnBorrow")
   private val TESTONRETURN: Boolean = conf.getBoolean("redis.TestOnReturn")
 
-
   private val poolConfig = new JedisPoolConfig
   poolConfig.setMaxTotal(MAXTOTAL)
   poolConfig.setMaxWaitMillis(MAXWAITMILLIS)
@@ -24,11 +23,14 @@ object RedisUtils {
   poolConfig.setTestOnBorrow(TESTONBORROW)
   poolConfig.setTestOnReturn(TESTONRETURN)
 
-
   def pool = new JedisPool(poolConfig,HOSTNAME,PORT)
 
   // 拿到jedis客户端
   def getJedis: Jedis = pool.getResource
+
+  def closeJedis(jedis: Jedis): Unit ={
+    jedis.close()
+  }
 
   // 测试连接
   def main(args: Array[String]): Unit = {
