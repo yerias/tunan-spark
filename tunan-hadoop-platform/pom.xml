@@ -11,7 +11,7 @@
     <groupId>com.tunan.hadoop</groupId>
     <artifactId>tunan-platform</artifactId>
     <version>0.0.1</version>
-    <name>tunan-platform</name>
+    <name>tunan-hadoop-platform</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

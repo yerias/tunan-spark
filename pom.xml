@@ -18,6 +18,7 @@
         <module>tunan-spark-utils</module>
         <module>tunan-spark-presto</module>
         <module>tunan-hadoop-flume</module>
+        <module>tunan-hadoop-platform</module>
         <module>tunan-java</module>
         <module>tunan-scala</module>
     </modules>
