@@ -13,7 +13,7 @@ object Transformation {
         val sc = new SparkContext(conf)
 
         val listRDD1 = sc.parallelize(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 5), 3)
-        val listRDD2 = sc.parallelize(List(1, 2, 3, 4, 5),1)
+        val listRDD2 = sc.parallelize(List(1, 2, 3, 4, 5), 1)
         val listRDD3 = sc.parallelize(List(9, 4, 5, 6, 7, 8, 9, 9, 8, 5), 3)
         val listRDD4 = sc.parallelize(List((9, 4), (5, 6), (7, 8), (9, 9), (8, 5)), 3)
 
@@ -33,11 +33,35 @@ object Transformation {
         //        sortBy(listRDD3)
         //        coalesce(listRDD4)
         //        repartitionAndSortWithPartitions(listRDD4)
-        union(listRDD1, listRDD2)
+        //        union(listRDD1, listRDD2)
+        //        zip(listRDD1,listRDD3)
+        //        zipWithIndex(listRDD1)
+        glom(listRDD1)
     }
-    def union(rdd1: RDD[Int],rdd2: RDD[Int]): Unit ={
+    def glom(rdd1: RDD[Int]): Unit = {
+        val glomRDD: RDD[Array[Int]] = rdd1.glom()
+        println(s"length: ${glomRDD.count()}")
+        glomRDD.foreach(println)
+    }
+
+    def zipWithIndex(rdd1: RDD[Int]): Unit = {
+        rdd1.zipWithIndex().map {
+            case (data, index) => {
+                println(s"data: ${data} , index: ${index}")
+            }
+        }.count()
+    }
+
+    def zip(rdd1: RDD[Int], rdd2: RDD[Int]): Unit = {
+        val unionRDD = rdd1.zip(rdd2)
+        println(unionRDD.partitions.length)
+        unionRDD.foreach(println)
+    }
+
+
+    def union(rdd1: RDD[Int], rdd2: RDD[Int]): Unit = {
         val unionRDD = rdd1.union(rdd2)
-        println(unionRDD.partitions.length) 
+        println(unionRDD.partitions.length)
         unionRDD.foreach(println)
     }
 
