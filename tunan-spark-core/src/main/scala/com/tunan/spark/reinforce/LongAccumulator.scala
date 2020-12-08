@@ -1,5 +1,7 @@
 package com.tunan.spark.reinforce
 
+import org.apache.spark.{SparkConf, SparkContext}
+
 object LongAccumulator {
 
     def main(args: Array[String]): Unit = {

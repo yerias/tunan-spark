@@ -8,7 +8,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class MySQKDruidUtils {
+public class MySQLDruidUtils {
+
+    static String RUL = "jdbc:mysql://aliyun:3306/study?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8";
+    static String USER = "root";
+    static String PASSWORD = "juan970907!@#";
+    static String DRIVER = "com.mysql.jdbc.Driver";
 
     private static DataSource ds;
 
@@ -17,7 +22,7 @@ public class MySQKDruidUtils {
             //1.创建配置文件对象
             Properties pro = new Properties();
             //2.加载配置文件
-            pro.load(new FileReader("E:\\Java\\spark\\tunan-spark\\tunan-spark-utils\\src\\main\\resources\\druid.properties"));
+            pro.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("druid.properties") );
             //3.创建DataSource 连接池
             ds = DruidDataSourceFactory.createDataSource(pro);
             DruidDataSourceFactory.createDataSource(pro);
@@ -27,6 +32,7 @@ public class MySQKDruidUtils {
     }
 
     public static Connection getConnection() throws SQLException {
+        System.out.println("获取连接");
         return ds.getConnection();
     }
 
@@ -52,6 +58,7 @@ public class MySQKDruidUtils {
                 e.printStackTrace();
             }
         }
+        System.out.println("释放连接");
     }
 
     public static void insertBatch(String sql, ArrayList<User> users) {
