@@ -15,7 +15,8 @@ object ListTest {
         println( )
         println(list3.mkString(" - "))
 
-
+        val head :: res = list2
+        println(res)
 
     }
 }
