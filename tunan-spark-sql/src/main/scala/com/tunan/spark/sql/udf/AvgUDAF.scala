@@ -16,6 +16,9 @@ object AvgUDAF {
       .getOrCreate()
 
 
+
+
+
     val schema = StructType(
       StructField("name", StringType, true)::
       StructField("age", IntegerType, true)::
@@ -28,6 +31,7 @@ object AvgUDAF {
     list.add(Row("wangwu",26,"女"))
     list.add(Row("翠翠",18,"女"))
     list.add(Row("闰土",8,"男"))
+
 
     val df = spark.createDataFrame(list, schema)
 

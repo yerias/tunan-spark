@@ -13,6 +13,5 @@ class DefaultSource extends RelationProvider{
                 // 匹配失败
             case _ => throw new IllegalArgumentException("path参数异常，不能创建textDataSourceRelation...")
         }
-
     }
 }

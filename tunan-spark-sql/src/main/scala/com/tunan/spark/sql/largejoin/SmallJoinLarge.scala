@@ -48,7 +48,7 @@ object SmallJoinLarge extends Logging{
 
     val joinRDD = userMapRDD.join(productMapRDD)
 
-    joinRDD.map( x=> s"${x._2._1},${x._2._2}").take(10)//.saveAsTextFile(out)
+    joinRDD.sortBy(x => x).map( x=> s"${x._2._1},${x._2._2}").take(10)//.saveAsTextFile(out)
 
     val end = System.currentTimeMillis()
     log.error("一共使用时间："+(end-start)+"ms======================================================")

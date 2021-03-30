@@ -5,6 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 object GroupTopN_Distinct {
     def main(args: Array[String]): Unit = {
         val in = "tunan-spark-core/data/site.log"
+
         //连接SparkMaster
         val conf = new SparkConf().setAppName(this.getClass.getSimpleName).setMaster("local[2]")
         val sc = new SparkContext(conf)

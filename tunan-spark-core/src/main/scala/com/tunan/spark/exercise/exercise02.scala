@@ -25,9 +25,9 @@ object exercise02 {
         //使用map返回的是一个数组，我不要数组，就使用flatMap
         import com.tunan.spark.utils.ImplicitAspect.rdd2RichRDD
         val map2RDD: RDD[((String, String), (Int, Int))] = linesRDD.flatMap(line => {
-            val words: Array[String] = line.split(",")
-            val programs: Array[String] = words(1).split("\\|")
-            val mapRDD: Array[((String, String), (Int, Int))] = programs.map(program => ((words(0), program), (words(2).toInt, words(3).toInt)))
+            val words = line.split(",")
+            val programs = words(1).split("\\|")
+            val mapRDD = programs.map(program => ((words(0), program), (words(2).toInt, words(3).toInt)))
             mapRDD
         })
         val groupRDD: RDD[((String, String), Iterable[(Int, Int)])] = map2RDD.groupByKey()

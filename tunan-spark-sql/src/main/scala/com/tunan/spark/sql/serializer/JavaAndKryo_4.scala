@@ -12,7 +12,7 @@ object JavaAndKryo_4 {
         val in = "tunan-spark-sql/data/video.txt"
 
         val conf = new SparkConf().setMaster("local[2]").setAppName(this.getClass.getSimpleName)
-
+        conf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
         conf.registerKryoClasses(Array(classOf[Info]))
 
         val sc = new SparkContext(conf)

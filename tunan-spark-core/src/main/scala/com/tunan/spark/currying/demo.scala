@@ -44,6 +44,7 @@ object demo {
 
     def sum2(x: Int)(y: Int): Int = x + y
 
+
     //定义为柯里化函数时没有问题的，b的类型可以由a参与得出
     def method(a: String)(b:a.type): Unit = {
         println(s"$a      $b")

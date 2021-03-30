@@ -1,6 +1,7 @@
 package com.tunan.spark.transformation
 
 import com.tunan.spark.utils.ContextUtils
+import com.tunan.spark.utils.ImplicitAspect.rdd2RichRDD
 
 object transformationdemo001 {
 
@@ -16,47 +17,48 @@ object transformationdemo001 {
         val mapRDD2 = sc.parallelize(List(("zhaoliu", 18), ("zhangsan", 22), ("list", 21), ("wangwu", 26)))
         val mapRDD3 = sc.parallelize(List(("hongqi", "男"), ("zhangsan", "男"), ("list", "女"), ("wangwu", "男")))
 
-        //        (listRDD.take(3).foreach(println))
-        //        println(listRDD.top(3)(Ordering.by(x => -x)))
-        //        listRDD.top(3)(Ordering.by(x => -x)).foreach(println)
-        //        mapRDD2.join(mapRDD3).print()
-        //        listRDD.takeOrdered(3)(Ordering.by(x => x)).foreach(println)
+                (listRDD.take(3).foreach(println))
+                println(listRDD.top(3)(Ordering.by(x => -x)))
+                listRDD.top(3)(Ordering.by(x => -x)).foreach(println)
+                mapRDD2.join(mapRDD3).print()
+                listRDD.takeOrdered(3)(Ordering.by(x => x)).foreach(println)
 
-        //        println(listRDD.reduce(_ + _))
-        //        mapRDD2.cogroup(mapRDD3).print()
-        //        listRDD.foreachPartition(x=>x.foreach(println))
-        //        mapRDD.countByKey().foreach(println)
-        //        mapRDD.lookup("zhangsan").foreach(println)
+                println(listRDD.reduce(_ + _))
+                mapRDD2.cogroup(mapRDD3).print()
+                listRDD.foreachPartition(x=>x.foreach(println))
+                mapRDD.countByKey().foreach(println)
+                mapRDD.lookup("zhangsan").foreach(println)
 
-        //        listRDD3.map(x=>(x,null)).reduceByKey((x,y)=>x).map(_._1).print()
-        //        listRDD.glom().collect().foreach(f=>f.foreach(x => println(x+" ")))
+                listRDD3.map(x=>(x,null)).reduceByKey((x,y)=>x).map(_._1).print()
+                listRDD.glom().collect().foreach(f=>f.foreach(x => println(x+" ")))
 
-        /*        mapRDD.groupByKey().print()
-                  mapRDD.groupByKey().mapValues(_.sum).print()*/
+                mapRDD.groupByKey().print()
+                  mapRDD.groupByKey().mapValues(_.sum).print()
 
-        //        listRDD.filter(_>5).print()
-        //        listRDD.map((_, 1)).print()
-        /*        listRDD.sample(true,0.4).print()
+                listRDD.filter(_>5).print()
+                listRDD.map((_, 1)).print()
+                listRDD.sample(true,0.4).print()
 
                 val name = List("张三", "李四", "王五")
                 val age = List(19, 26, 38)
                 val zipRDD: List[((String, Int), Int)] = name.zip(age).zipWithIndex
 
 
-                val ints: List[Int] = list1.union(list2)
-
-                ints.foreach(println)
-                val inter: List[Int] = list1.intersect(list2)
-                inter.foreach(println)
+//                val ints: List[Int] = list1.union(list2)
+//
+//                ints.foreach(println)
+//                val inter: List[Int] = list1.intersect(list2)
+//                inter.foreach(println)
 
         //        list1.subtract(list2)
                 listRDD2.subtract(listRDD3)
 
-                val car = listRDD2.cartesian(listRDD3)*/
+                val car = listRDD2.cartesian(listRDD3)
+
         val list1 = List(1, 2, 3, 4, 5, 6)
         val list2 = List(4, 5, 6, 7, 8, 8, 8)
-        /*        val dist = list2.distinct
-                dist.foreach(println)*/
+                val dist = list2.distinct
+                dist.foreach(println)
 
         /*        val iterable = dist.map(x => (x, null)).groupBy(_._1).map(_._1)
                 iterable.foreach(println)*/

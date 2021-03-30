@@ -36,9 +36,10 @@
         <config.version>1.2.1</config.version>
         <presto.version>0.233.1</presto.version>
         <kudu.version>1.7.0</kudu.version>
-        <hbase.version>1.2.0-cdh5.16.2</hbase.version>
+        <hbase.version>1.2.0-cdh5.14.2</hbase.version>
 
     </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -51,20 +52,32 @@
                 <artifactId>netty-all</artifactId>
                 <version>4.1.49.Final</version>
             </dependency>
-<!--            <dependency>
-                <groupId>org.apache.hadoop</groupId>
-                <artifactId>hadoop-mapreduce-client-core</artifactId>
-                <version>2.6.0-cdh5.16.2</version>
-            </dependency>-->
+            <!--            <dependency>
+                            <groupId>org.apache.hadoop</groupId>
+                            <artifactId>hadoop-mapreduce-client-core</artifactId>
+                            <version>2.6.0-cdh5.16.2</version>
+                        </dependency>-->
             <dependency>
                 <groupId>org.apache.hbase</groupId>
                 <artifactId>hbase-server</artifactId>
                 <version>${hbase.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.hadoop</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.hbase</groupId>
                 <artifactId>hbase-client</artifactId>
                 <version>${hbase.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.hadoop</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.apache.kudu/kudu-spark2 -->
@@ -82,11 +95,11 @@
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.hadoop.gplcompression/hadoop-lzo -->
-            <dependency>
-                <groupId>com.hadoop.gplcompression</groupId>
-                <artifactId>hadoop-lzo</artifactId>
-                <version>0.4.20</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.hadoop.gplcompression</groupId>-->
+<!--                <artifactId>hadoop-lzo</artifactId>-->
+<!--                <version>0.4.20</version>-->
+<!--            </dependency>-->
 
             <!--redis依赖-->
             <dependency>
@@ -194,6 +207,17 @@
             </snapshots>
         </repository>
 
+        <repository>
+            <id>twitter</id>
+            <url>https://maven.twttr.com/</url>
+            <!--允许发布版本，禁止快照版-->
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
 
     </repositories>
     <build>
@@ -221,6 +245,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.5.1</version>
                 <configuration>
                     <downloadSources>true</downloadSources>
                     <buildcommands>

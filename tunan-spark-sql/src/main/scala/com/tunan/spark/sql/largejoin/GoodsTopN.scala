@@ -45,7 +45,7 @@ object GoodsTopN {
       partition.foreach(x => {
         set.add(x)
         if (set.size > 50) {
-          set.remove(set.lastKey)
+          set.remove(set.last)
         }
       })
       set.toIterator

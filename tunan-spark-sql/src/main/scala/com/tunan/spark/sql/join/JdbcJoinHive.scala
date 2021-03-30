@@ -20,7 +20,6 @@ object JdbcJoinHive {
 
         val joinDF: DataFrame = jdbcDF.join(hiveDF, "deptno")
 
-
         val selectDF: DataFrame = joinDF.select("ename")
 
         spark.sql("cache table dept")

@@ -23,7 +23,7 @@ object SortApp02 {
 
 
         // 隐式方法/转换 ==> 偷偷的增强方法
-/*        implicit def ProductsInfo2Ordered(productsInfo:ProductsInfo):Ordered[ProductsInfo] = new Ordered[ProductsInfo] {
+        implicit def ProductsInfo2Ordered(productsInfo:ProductsInfo) = new Ordered[ProductsInfo] {
             println("===========我是隐式方法===============")
             override def compare(that: ProductsInfo): Int = {
                 if (that.price-productsInfo.price>0){
@@ -34,15 +34,16 @@ object SortApp02 {
                     -1
                 }
             }
-        }*/
+        }
+
 
         // 隐式变量
-/*        implicit val ProductsInfo2Orderding:Ordering[ProductsInfo] = new Ordering[ProductsInfo] {
+        implicit val ProductsInfo2Orderding:Ordering[ProductsInfo] = new Ordering[ProductsInfo] {
             println("===========我是隐式变量===============")
             override def compare(x: ProductsInfo, y: ProductsInfo): Int = {
                 y.amount - x.amount
             }
-        }*/
+        }
 
         // 隐式类
         implicit object ProductsInfo22Orderding extends Ordering[ProductsInfo]{
