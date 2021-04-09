@@ -65,8 +65,9 @@ object SparkHBaseSourceApp {
               |""".stripMargin).rdd
 
 
-//            saveToHBase(sqlRDD,"empno","ename:string,job:string,mgr:string,hiredate:string,sal:double,comm:double,dname:string,loc:string")
-//            .saveAsNewAPIHadoopDataset(job.getConfiguration)
+            saveToHBase(sqlRDD,"empno","ename:string,job:string,mgr:string,hiredate:string,sal:double,comm:double,dname:string,loc:string")
+            // 直接Bulk Load数据到Hbase
+            .saveAsNewAPIHadoopDataset(job.getConfiguration)
 
 //        val staff = spark.read.format("com.tunan.spark.sql.extds.hbase")
 //            .option("spark.hbase.table.name", "staff")
@@ -86,7 +87,6 @@ object SparkHBaseSourceApp {
         rdd.map(row => {
 
             val put = new Put(Bytes.toBytes(row.getAs[String](key)))
-
             val splits = value.split(",")
 
             for(i <- 0 until splits.length){
