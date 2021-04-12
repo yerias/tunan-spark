@@ -15,7 +15,6 @@ class GenericTraitA[E] extends GenericTrait[E] {
 }
 
 class GenericTraitB extends GenericTrait[Int] {
-
 }
 
 
@@ -28,5 +27,4 @@ object GenericTrait {
         b.show(1)
 
     }
-
 }

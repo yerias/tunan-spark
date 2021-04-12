@@ -23,7 +23,7 @@ object DownBound {
         val arr2 = Array(new PersonMan("z3"),new PersonMan("l4"),new PersonMan("w5"))
 
 //        printlnArr(arr1)
-//        printlnArr(arr2)
+        printlnArr(arr2)
 
     }
 }

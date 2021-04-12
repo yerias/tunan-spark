@@ -25,6 +25,28 @@
         <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
 
         <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-server</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.1.21</version>
@@ -61,10 +83,10 @@
             <artifactId>scalikejdbc-config_${scala.tools.version}</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.scala-lang</groupId>-->
+<!--            <artifactId>scala-library</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.lionsoul</groupId>

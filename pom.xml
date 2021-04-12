@@ -36,7 +36,7 @@
         <config.version>1.2.1</config.version>
         <presto.version>0.233.1</presto.version>
         <kudu.version>1.7.0</kudu.version>
-        <hbase.version>1.2.0-cdh5.14.2</hbase.version>
+        <hbase.version>1.2.0-cdh5.16.2</hbase.version>
 
     </properties>
 
