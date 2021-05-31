@@ -21,6 +21,7 @@
         <module>tunan-hadoop-platform</module>
         <module>tunan-java</module>
         <module>tunan-scala</module>
+        <module>tunan-hadoop-hdfs</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,7 +38,6 @@
         <presto.version>0.233.1</presto.version>
         <kudu.version>1.7.0</kudu.version>
         <hbase.version>1.2.0-cdh5.16.2</hbase.version>
-
     </properties>
 
     <dependencyManagement>
