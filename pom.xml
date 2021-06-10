@@ -21,6 +21,7 @@
         <module>tunan-hadoop-platform</module>
         <module>tunan-java</module>
         <module>tunan-scala</module>
+        <module>tunan-spark-clickhouse</module>
 <!--        <module>tunan-hadoop-hdfs</module>-->
     </modules>
     <properties>

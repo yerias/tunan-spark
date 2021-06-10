@@ -1,4 +1,4 @@
-package com.tunan.scala.chapter21
+package com.tunan.scala.`implicit`
 
 import java.io.File
 
@@ -39,7 +39,7 @@ object ImplicitClass {
 
 
 object Main extends App{
-    import com.tunan.scala.chapter21.ImplicitClass._
+    import com.tunan.scala.`implicit`.ImplicitClass._
     // 创建一个原来的类，调用增强的方法
 //    private val student = new Student()
 //    student.increment()

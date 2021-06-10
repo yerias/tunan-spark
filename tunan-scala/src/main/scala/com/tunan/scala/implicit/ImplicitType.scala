@@ -1,4 +1,4 @@
-package com.tunan.scala.chapter21
+package com.tunan.scala.`implicit`
 
 object ImplicitType {
     def main(args: Array[String]): Unit = {

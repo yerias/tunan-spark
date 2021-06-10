@@ -1,4 +1,4 @@
-package com.tunan.scala.chapter21
+package com.tunan.scala.`implicit`
 
 
 class ImplicitView{
@@ -28,7 +28,7 @@ object swimming{
 }
 class AminalType
 object AminalType extends  App{
-    import com.tunan.scala.chapter21.swimming._
+    import com.tunan.scala.`implicit`.swimming._
     val rabbit = new AminalType
     // rabbit 没有wantLearned方法，但是调用learningType把自己传入返回一个SwingType
     rabbit.wantLearned("breaststroke")

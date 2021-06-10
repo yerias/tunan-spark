@@ -1,4 +1,4 @@
-package com.tunan.scala.chapter21
+package com.tunan.scala.`implicit`
 
 class PreferredPrompt(val preference: String)
 class PreferredDrink(val preference: String)

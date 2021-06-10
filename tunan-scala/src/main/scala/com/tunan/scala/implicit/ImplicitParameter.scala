@@ -1,4 +1,4 @@
-package com.tunan.scala.chapter21
+package com.tunan.scala.`implicit`
 
 // 封装特殊类型
 class name2string(val name:String)
