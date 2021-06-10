@@ -21,7 +21,7 @@
         <module>tunan-hadoop-platform</module>
         <module>tunan-java</module>
         <module>tunan-scala</module>
-        <module>tunan-hadoop-hdfs</module>
+<!--        <module>tunan-hadoop-hdfs</module>-->
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,7 +32,7 @@
         <scala.tools.version>2.12</scala.tools.version>
         <spark.version>2.4.5</spark.version>
         <mysql.jdbc.version>5.1.38</mysql.jdbc.version>
-        <scalikejdbc.version>3.3.2</scalikejdbc.version>
+        <scalikejdbc.version>2.5.2</scalikejdbc.version>
         <jedis.version>2.9.0</jedis.version>
         <config.version>1.2.1</config.version>
         <presto.version>0.233.1</presto.version>
