@@ -12,6 +12,7 @@
     <artifactId>tunan-java</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
