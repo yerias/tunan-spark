@@ -21,10 +21,10 @@ object JoesPrefs{
 object test{
     def main(args: Array[String]): Unit = {
 
-//        import JoesPrefs._
-//        Greeter.greet("hello")
+        import JoesPrefs._
+        Greeter.greet("hello")
 
-        val rev: String = "abc".reverse
-        println(rev(1))
+//        val rev: String = "abc".reverse
+//        println(rev(1))
     }
 }
