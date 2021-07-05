@@ -1,7 +1,5 @@
 package com.tunan.java.io.stream;
 
-import scala.reflect.internal.Types;
-
 import java.io.*;
 import java.util.*;
 
@@ -12,18 +10,18 @@ public class ReverseLines {
 
     public static void main(String[] args) {
 
-        if (args.length == 0){
+        if (args.length == 0) {
             System.exit(1);
         }
 
 //        System.out.println(reverse(args[0]));
-        System.out.println(reverse(args[0],true));
+        System.out.println(reverse(args[0], true));
 
 //        System.out.println(reverseAndFind(args));
 
     }
 
-    public static String reverse(String filename,boolean printLineNumber){
+    public static String reverse(String filename, boolean printLineNumber) {
         BufferedReader in = null;
         LinkedList<String> list;
         StringBuilder sb = new StringBuilder();
@@ -33,15 +31,15 @@ public class ReverseLines {
             String line;
 
             list = new LinkedList<>();
-            while((line = in.readLine())!= null){
+            while ((line = in.readLine()) != null) {
                 list.add(line.toUpperCase());
             }
 
             // 检索但不删除此列表的最后一个元素，如果此列表为空，则返回null
-            while (list.peekLast() != null){
+            while (list.peekLast() != null) {
                 // 检索并删除此列表的最后一个元素，如果此列表为空，则返回null。
-                sb.append(lineNumber +": " +list.pollLast()+"\n");
-                lineNumber ++ ;
+                sb.append(lineNumber + ": " + list.pollLast() + "\n");
+                lineNumber++;
             }
 
         } catch (FileNotFoundException e) {
@@ -59,7 +57,7 @@ public class ReverseLines {
         return sb.toString();
     }
 
-    public static String reverse(String filename){
+    public static String reverse(String filename) {
         BufferedReader in = null;
         LinkedList<String> list;
         StringBuilder sb = new StringBuilder();
@@ -68,14 +66,14 @@ public class ReverseLines {
             String line;
 
             list = new LinkedList<>();
-            while((line = in.readLine())!= null){
+            while ((line = in.readLine()) != null) {
                 list.add(line.toUpperCase());
             }
 
             // 检索但不删除此列表的最后一个元素，如果此列表为空，则返回null
-            while (list.peekLast() != null){
+            while (list.peekLast() != null) {
                 // 检索并删除此列表的最后一个元素，如果此列表为空，则返回null。
-                sb.append(list.pollLast()+"\n");
+                sb.append(list.pollLast() + "\n");
             }
 
         } catch (FileNotFoundException e) {
@@ -94,9 +92,9 @@ public class ReverseLines {
     }
 
 
-    public static String reverseAndFind(String[] args){
+    public static String reverseAndFind(String[] args) {
 
-        if(args.length < 2){
+        if (args.length < 2) {
             System.out.println("Usage: enter file name\n" +
                     "followed by words to find in lines of that file");
             System.exit(1);
@@ -121,19 +119,19 @@ public class ReverseLines {
             String line;
 
             list = new LinkedList<>();
-            while((line = in.readLine())!= null){
+            while ((line = in.readLine()) != null) {
                 List<String> lineWords = Arrays.asList(line.split("\\W+"));
 
                 // 此方法的返回类型为boolean ，当Collection对象中不存在公共元素时返回true，否则返回false。
-                if(!Collections.disjoint(findWords,lineWords)){
+                if (!Collections.disjoint(findWords, lineWords)) {
                     list.add(line);
                 }
             }
 
             // 检索但不删除此列表的最后一个元素，如果此列表为空，则返回null
-            while (list.peekLast() != null){
+            while (list.peekLast() != null) {
                 // 检索并删除此列表的最后一个元素，如果此列表为空，则返回null。
-                sb.append(list.pollLast()+"\n");
+                sb.append(list.pollLast() + "\n");
             }
 
         } catch (FileNotFoundException e) {
