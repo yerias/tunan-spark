@@ -4,6 +4,12 @@ import java.io.*;
 
 public class BinaryFile {
 
+    /**
+     * 返回指定文件的内容，以字节的形式
+     * @param file
+     * @return
+     * @throws FileNotFoundException
+     */
     public static byte[] read(File file) throws FileNotFoundException {
         BufferedInputStream bi = new BufferedInputStream(new FileInputStream(file));
 

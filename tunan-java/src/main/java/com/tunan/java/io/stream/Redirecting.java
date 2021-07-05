@@ -1,7 +1,5 @@
 package com.tunan.java.io.stream;
 
-import com.tunan.java.io.util.Println;
-
 import java.io.*;
 
 public class Redirecting {
@@ -25,13 +23,13 @@ public class Redirecting {
 
             // System.in 指向的是 C:/Users/Administrator/Desktop/a.txt 文件
             br = new BufferedReader(new InputStreamReader(System.in));
-            while((s = br.readLine()) != null){
+            while ((s = br.readLine()) != null) {
                 System.out.println(s);
             }
 
             System.setOut(console);
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             try {

@@ -1,8 +1,10 @@
 package com.tunan.java.io.file;
 
+
 import com.tunan.java.io.util.TextFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,12 +28,18 @@ public class DirList1a {
                 Pattern pattern = Pattern.compile(args[0]);
                 @Override
                 public boolean accept(File dir, String name) {
-                    return pattern.matcher(name).matches() &&
-                            // 判断2个list中是否有相同的数据
-                            !(Collections.disjoint(
-                            Arrays.asList(args).subList(1,args.length),
-                            new TextFile(dir+"/"+name,"\\W+")
-                    ));
+                    Boolean b = null;
+                    try {
+                        b = pattern.matcher(name).matches() &&
+                                // 判断2个list中是否有相同的数据
+                                !(Collections.disjoint(
+                                        Arrays.asList(args).subList(1, args.length),
+                                        new TextFile(dir + "/" + name, "\\W+")
+                                ));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    return b ;
                 }
             });
         }
