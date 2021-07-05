@@ -3,7 +3,10 @@ package com.tunan.java.io.socket;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Set;
@@ -13,12 +16,11 @@ public class ChannelSocketServer {
     //创建一个选择器
     private Selector selector;
     private final static int PORT = 9000;
-    private final static int BUFF_SIZE = 8*1024;
+    private final static int BUFF_SIZE = 8 * 1024;
 
     private void initServer() throws IOException {
         //创建通道管理器对象selector
         this.selector = Selector.open();
-
         //创建一个通道对象channel
         ServerSocketChannel channel = ServerSocketChannel.open();
         //将通道设置为非阻塞
@@ -31,7 +33,7 @@ public class ChannelSocketServer {
         channel.register(selector, SelectionKey.OP_ACCEPT);
 
         //轮询
-        while(true){
+        while (true) {
             //这是一个阻塞方法，一直等待直到有数据可读，返回值是key的数量（可以有多个）
             selector.select();
             //如果channel有数据了，将生成的key访入keys集合中
@@ -39,19 +41,19 @@ public class ChannelSocketServer {
             //得到这个keys集合的迭代器
             Iterator<SelectionKey> iterator = keys.iterator();
             //使用迭代器遍历集合
-            while(iterator.hasNext()){
+            while (iterator.hasNext()) {
                 //得到集合中的一个key实例
                 SelectionKey key = iterator.next();
                 //拿到当前key实例之后记得在迭代器中将这个元素删除，非常重要，否则会出错
                 iterator.remove();
                 //判断当前key所代表的channel是否在Acceptable状态，如果是就进行接收
-                if(key.isAcceptable()){
+                if (key.isAcceptable()) {
                     doAccept(key);
-                }else if(key.isReadable()){
+                } else if (key.isReadable()) {
                     doRead(key);
-                }else if(key.isWritable()){
+                } else if (key.isWritable()) {
                     doWrite(key);
-                }else if(key.isConnectable()){
+                } else if (key.isConnectable()) {
                     System.out.println("连接成功！");
                 }
 
@@ -61,6 +63,7 @@ public class ChannelSocketServer {
 
     /**
      * 接收连接
+     *
      * @param key
      * @throws IOException
      */
@@ -73,7 +76,7 @@ public class ChannelSocketServer {
         // 切换到非阻塞模式
         clientChannel.configureBlocking(false);
         // 将该通道注册到选择器上
-        clientChannel.register(key.selector(),SelectionKey.OP_READ);
+        clientChannel.register(key.selector(), SelectionKey.OP_READ);
         //将key对应Channel设置为准备接受其他请求
         key.interestOps(SelectionKey.OP_ACCEPT);
     }
@@ -94,33 +97,67 @@ public class ChannelSocketServer {
                 buffer.compact();
                 byteRead = clientChannel.read(buffer);
             }
-
-            doWrite(key);
+            doWrite(clientChannel);
             // 写完就把状态关注去掉，否则会一直触发写事件(改变自身关注事件)
-//            key.interestOps(SelectionKey.OP_READ);
+            key.interestOps(SelectionKey.OP_READ);
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
             key.cancel();
-            if(null != clientChannel){
-                clientChannel.close();
+            if (key.channel() != null) {
+                key.channel().close();
             }
+//            e.printStackTrace();
         }
 
+//        SocketChannel channel = (SocketChannel) key.channel();
+//        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+//        String content = "";
+//        try {
+//            int readBytes = channel.read(byteBuffer);
+//            if (readBytes > 0) {
+//                byteBuffer.flip(); //为write()准备
+//                byte[] bytes = new byte[byteBuffer.remaining()];
+//                byteBuffer.get(bytes);
+//                content += new String(bytes);
+//                System.out.println(content);
+//                //回应客户端
+//                doWrite(channel);
+//            }
+//            // 写完就把状态关注去掉，否则会一直触发写事件(改变自身关注事件)
+//            key.interestOps(SelectionKey.OP_READ);
+//        } catch (IOException i) {
+//            //如果捕获到该SelectionKey对应的Channel时出现了异常,即表明该Channel对于的Client出现了问题
+//            //所以从Selector中取消该SelectionKey的注册
+//            key.cancel();
+//            if (key.channel() != null) {
+//                key.channel().close();
+//            }
+//        }
     }
 
+    //
     private void doWrite(SelectionKey key) throws IOException {
         String info = "客户端你好！";
         ByteBuffer buffer = ByteBuffer.allocate(BUFF_SIZE);
         buffer.put(info.getBytes(StandardCharsets.UTF_8));
         buffer.flip();
         SocketChannel clientChannel = (SocketChannel) key.channel();
-        while(buffer.hasRemaining()){
+        while (buffer.hasRemaining()) {
             clientChannel.write(buffer);
         }
 
         buffer.clear();
         clientChannel.close();
+    }
+
+    private void doWrite(SocketChannel sc) throws IOException {
+        byte[] req = "服务器已接受".getBytes();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(req.length);
+        byteBuffer.put(req);
+        byteBuffer.flip();
+        sc.write(byteBuffer);
+        if (!byteBuffer.hasRemaining()) {
+            System.out.println("Send 2 Service successed");
+        }
     }
 
     public static void main(String[] args) {

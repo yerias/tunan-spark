@@ -50,7 +50,8 @@ public class ChannelSocketClient{
         byteBuffer.put(info.getBytes(StandardCharsets.UTF_8));
         byteBuffer.flip();
         clientChannel.write(byteBuffer);
-        clientChannel.close();
+        clientChannel.register(selector, SelectionKey.OP_READ);
+//        clientChannel.close();
 
     }
 
@@ -60,8 +61,29 @@ public class ChannelSocketClient{
         byte[] data = byteBuffer.array();
         String msg = new String(data).trim();
         System.out.println("服务端发送消息: "+msg);
+        key.interestOps(SelectionKey.OP_READ);
         clientChannel.close();
-        key.selector().close();
+//        key.channel();
+//        key.selector().close();
+
+
+        //读取服务端的响应
+//        ByteBuffer buffer = ByteBuffer.allocate(1024);
+//        int readBytes = clientChannel.read(buffer);
+//        String content = "";
+//        if (readBytes > 0) {
+//            buffer.flip();
+//            byte[] bytes = new byte[buffer.remaining()];
+//            buffer.get(bytes);
+//            content += new String(bytes);
+////            stop = true;
+//        } else if (readBytes < 0) {
+//            //对端链路关闭
+//            key.channel();
+//            clientChannel.close();
+//        }
+//        System.out.println(content);
+
 
     }
 
