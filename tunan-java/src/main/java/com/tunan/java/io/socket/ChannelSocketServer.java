@@ -91,7 +91,8 @@ public class ChannelSocketServer {
             int byteRead = clientChannel.read(buffer);
             while(byteRead > 0){
                 buffer.flip();
-                byte[] data = buffer.array();
+                // 判断消息是否发送完成
+                byte[] data = new byte[buffer.remaining()];
                 String info = new String(data).trim();
                 System.out.println("客户端发送过来的消息: "+info);
                 buffer.compact();
@@ -102,36 +103,10 @@ public class ChannelSocketServer {
             key.interestOps(SelectionKey.OP_READ);
         } catch (Exception e) {
             key.cancel();
-            if (key.channel() != null) {
-                key.channel().close();
+            if (clientChannel != null) {
+                clientChannel.close();
             }
-//            e.printStackTrace();
         }
-
-//        SocketChannel channel = (SocketChannel) key.channel();
-//        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-//        String content = "";
-//        try {
-//            int readBytes = channel.read(byteBuffer);
-//            if (readBytes > 0) {
-//                byteBuffer.flip(); //为write()准备
-//                byte[] bytes = new byte[byteBuffer.remaining()];
-//                byteBuffer.get(bytes);
-//                content += new String(bytes);
-//                System.out.println(content);
-//                //回应客户端
-//                doWrite(channel);
-//            }
-//            // 写完就把状态关注去掉，否则会一直触发写事件(改变自身关注事件)
-//            key.interestOps(SelectionKey.OP_READ);
-//        } catch (IOException i) {
-//            //如果捕获到该SelectionKey对应的Channel时出现了异常,即表明该Channel对于的Client出现了问题
-//            //所以从Selector中取消该SelectionKey的注册
-//            key.cancel();
-//            if (key.channel() != null) {
-//                key.channel().close();
-//            }
-//        }
     }
 
     //
