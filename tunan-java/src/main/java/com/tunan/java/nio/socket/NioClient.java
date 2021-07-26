@@ -1,4 +1,4 @@
-package com.tunan.java.io.newio;
+package com.tunan.java.nio.socket;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

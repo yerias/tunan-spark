@@ -1,4 +1,4 @@
-package com.tunan.java.io.newio;
+package com.tunan.java.nio;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

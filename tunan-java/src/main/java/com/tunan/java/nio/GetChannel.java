@@ -1,4 +1,4 @@
-package com.tunan.java.io.newio;
+package com.tunan.java.nio;
 
 import java.io.*;
 import java.nio.ByteBuffer;
