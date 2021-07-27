@@ -7,14 +7,14 @@ import java.nio.channels.FileChannel;
 /**
  * 获取 new io 的channel
  */
-public class GetChannel {
+public class FileChannelWriteAndRead {
 
     private static int BSIZE = 1024;
 
     public static void main(String[] args) throws IOException {
 
         // 写数据
-        FileChannel fc = new FileOutputStream("tunan-java/out/out.txt").getChannel();
+        java.nio.channels.FileChannel fc = new FileOutputStream("tunan-java/out/out.txt").getChannel();
         fc.write(ByteBuffer.wrap("hello world ".getBytes()));
         fc.close();
 

@@ -1,4 +1,4 @@
-package com.tunan.java.thread.future;
+package com.tunan.java.thread;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

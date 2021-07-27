@@ -8,7 +8,7 @@ import java.nio.channels.FileChannel;
 /**
  * 连通两个Channel
  */
-public class TransferTo {
+public class FileTransferTo {
 
     public static void main(String[] args) throws Exception {
 

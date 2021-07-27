@@ -10,7 +10,7 @@ import java.nio.channels.FileChannel;
 /**
  * channel 之间，复制数据
  */
-public class ChannelCopy {
+public class FileChannelCopy {
 
     private static int BSIZE = 1024;
 
