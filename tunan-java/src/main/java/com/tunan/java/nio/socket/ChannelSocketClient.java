@@ -80,6 +80,7 @@ public class ChannelSocketClient{
     }
 
     private void doRead(SelectionKey key) throws IOException {
+        byteBuffer.clear();
         // 从接受到的SelectionKey中拿到ClientChannel
         SocketChannel clientChannel = (SocketChannel) key.channel();
         // 从clientChannel中读取数据

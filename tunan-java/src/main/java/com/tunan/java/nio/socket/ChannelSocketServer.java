@@ -82,7 +82,6 @@ public class ChannelSocketServer {
         clientChannel.register(key.selector(), SelectionKey.OP_READ);
         //将key对应Channel设置为准备接受其他请求
         key.interestOps(SelectionKey.OP_ACCEPT);
-//        clientChannel.close();
     }
 
     private void doRead(SelectionKey key) throws IOException {
@@ -93,40 +92,38 @@ public class ChannelSocketServer {
         // 读取数据
         try {
             int byteRead = clientChannel.read(buffer);
-            while(byteRead > 0){
+            if (byteRead > 0){
                 buffer.flip();
                 // 判断消息是否发送完成
                 byte[] data = new byte[buffer.limit()];
                 buffer.get(data);
                 String info = new String(data);
                 System.out.println("客户端发送过来的消息: "+info);
-                buffer.compact();
-                byteRead = clientChannel.read(buffer);
             }
-//            doWrite(clientChannel);
-            // 写完就把状态关注去掉，否则会一直触发写事件(改变自身关注事件)
-            key.interestOps(SelectionKey.OP_ACCEPT);
+            doWrite(clientChannel);
+            // 这里只能是OP_READ
+            key.interestOps(SelectionKey.OP_READ);
         } catch (Exception e) {
             key.cancel();
             if (clientChannel != null) {
-                clientChannel.close();
+                key.channel().close();
             }
         }
     }
 
     //
     private void doWrite(SelectionKey key) throws IOException {
-        String info = "客户端你好！";
-        ByteBuffer buffer = ByteBuffer.allocate(BUFF_SIZE);
-        buffer.put(info.getBytes(StandardCharsets.UTF_8));
-        buffer.flip();
+        byte[] info = "服务器已连接！".getBytes();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(info.length);
+        byteBuffer.put(info);
+        byteBuffer.flip();
         SocketChannel clientChannel = (SocketChannel) key.channel();
-//        while (buffer.hasRemaining()) {
-//
-//        }
-        clientChannel.write(buffer);
-        buffer.clear();
-//        clientChannel.close();
+        clientChannel.write(byteBuffer);
+        if (!byteBuffer.hasRemaining()) {
+            System.out.println("服务器: 发送成功");
+        }
+        byteBuffer.clear();
+        key.interestOps(SelectionKey.OP_READ);
     }
 
     private void doWrite(SocketChannel sc) throws IOException {
