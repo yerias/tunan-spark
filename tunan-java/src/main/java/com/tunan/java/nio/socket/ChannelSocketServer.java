@@ -39,9 +39,8 @@ public class ChannelSocketServer {
             selector.select();
             System.out.println("监听到事件,向下执行");
             //如果channel有数据了，将生成的key访入keys集合中
-            Set<SelectionKey> keys = selector.selectedKeys();
+            Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
             //得到这个keys集合的迭代器
-            Iterator<SelectionKey> iterator = keys.iterator();
             //使用迭代器遍历集合
             while (iterator.hasNext()) {
                 //得到集合中的一个key实例
@@ -55,11 +54,6 @@ public class ChannelSocketServer {
                 } else if (key.isReadable()) {
                     System.out.println("可读取");
                     doRead(key);
-                } else if (key.isWritable()) {
-                    System.out.println("可写出");
-                    doWrite(key);
-                }else if (key.isConnectable()) {
-                    System.out.println("连接成功！");
                 }
             }
         }
@@ -133,7 +127,7 @@ public class ChannelSocketServer {
         byteBuffer.flip();
         sc.write(byteBuffer);
         if (!byteBuffer.hasRemaining()) {
-            System.out.println("服务器: 发送成功");
+            System.out.println("服务器: 发送成功22222");
         }
     }
 
