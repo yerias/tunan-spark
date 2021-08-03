@@ -27,6 +27,7 @@ public class QQClient {
 
     Scanner scanner = new Scanner(System.in);
 
+    // 主线程发送数据
     public void startClient() throws IOException {
         //客户端初始化固定流程：4步
         //1.打开Selector
@@ -55,7 +56,7 @@ public class QQClient {
                 // 啥也不干
                 // 如果姓名已经初始化过了，且长度为2.说明这是正常的发送格式
             } else if (!"".equals(name) && line.split("[|]").length == 2) {
-                // 这里的name，是注册的name
+                // 这里的name，是注册的name，从服务端返回的
                 line = line + SEPARATOR + name;
             } else {
                 System.out.println("输入不合法，请重新输入：");
@@ -71,6 +72,7 @@ public class QQClient {
     }
 
 
+    // 接受数据的线程
     private class ClientReadThread implements Runnable {
         @Override
         public void run() {
@@ -94,7 +96,9 @@ public class QQClient {
                             try {
                                 while (client.read(buffer) > 0) {
                                     //将写模式转换为读模式
+                                    System.out.println("写"+buffer);
                                     buffer.flip();
+                                    System.out.println("读"+buffer);
                                     msg.append(CHARSET.decode(buffer));
                                 }
 
@@ -110,10 +114,12 @@ public class QQClient {
                                 if (message.equalsIgnoreCase("")) {
                                     continue;
                                 }
-                                // 如果用户是第一次注册，拿到用户名
+                                // 如果用户是第一次注册，拿到用户名: 您的昵称通过验证 XXX
                                 if (message.contains("您的昵称通过验证")) {
                                     String[] nameValid = message.split(" ");
+                                    // 拿到用户名
                                     name = nameValid[1];
+                                    // user绑定到key
                                     key.attach(name);
                                 }
                                 System.out.println(message);

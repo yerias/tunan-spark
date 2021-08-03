@@ -74,8 +74,8 @@ public class ChannelSocketServer {
         clientChannel.configureBlocking(false);
         // 将该通道注册到选择器上
         clientChannel.register(key.selector(), SelectionKey.OP_READ);
-        //将key对应Channel设置为准备接受其他请求
-        key.interestOps(SelectionKey.OP_ACCEPT);
+        //将key对应Channel设置为准备接受其他请求，这次对下一次感兴趣的还是OP_ACCEPT。可以不写
+//        key.interestOps(SelectionKey.OP_ACCEPT);
     }
 
     private void doRead(SelectionKey key) throws IOException {
@@ -95,8 +95,8 @@ public class ChannelSocketServer {
                 System.out.println("客户端发送过来的消息: "+info);
             }
             doWrite(clientChannel);
-            // 这里只能是OP_READ
-            key.interestOps(SelectionKey.OP_READ);
+            // 这里只能是OP_READ,这里对下一次感情兴的还是OP_READ，可以不写
+//            key.interestOps(SelectionKey.OP_READ);
         } catch (Exception e) {
             key.cancel();
             if (clientChannel != null) {
@@ -117,6 +117,7 @@ public class ChannelSocketServer {
             System.out.println("服务器: 发送成功");
         }
         byteBuffer.clear();
+        // 这里是写事件，可以对下一次感情去的事件是OP_READ
         key.interestOps(SelectionKey.OP_READ);
     }
 

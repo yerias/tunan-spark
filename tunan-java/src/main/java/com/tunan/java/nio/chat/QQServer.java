@@ -31,6 +31,7 @@ public class QQServer {
         socketChannel = ServerSocketChannel.open();         // 2.ServerSocketChannel open
         socketChannel.bind(new InetSocketAddress(PORT));    // 3.serverChannel绑定端口
         socketChannel.configureBlocking(false);             // 4.设置NIO为非阻塞模式
+        // 这个socketChannel是服务端channel，只负责接受
         socketChannel.register(selector, SelectionKey.OP_ACCEPT);// 5.将channel注册在选择器上
 
         //NIO server处理数据固定流程:5步
@@ -48,7 +49,7 @@ public class QQServer {
                 key = keys.next();
                 //4.对每个连接感兴趣的事做不同的处理
                 if (key.isAcceptable()) {
-                    //对于客户端连接，注册到服务端
+                    //客户端连接，这个client是客户端socketChannel，通过服务端的socketChannel接受到的，负责读写
                     client = socketChannel.accept();
                     //获取客户端首次连接
                     client.configureBlocking(false);
@@ -100,13 +101,18 @@ public class QQServer {
      * @Key 这里主要用attach()方法，给通道定义一个表示符
      */
     private void processMsg(String msg, SocketChannel client, SelectionKey key) throws IOException {
+        System.out.println("接收的原数据: "+msg);
+        System.out.println("数据的分隔符: "+SEPARATOR);
         String[] ms = msg.split(SEPARATOR);
+        // 长度是1，发送的是用户名
         if (ms.length == 1) {
             //输入的是自定义用户名
             String user = ms[0];
             if (onlineUsers.containsKey(user)) {
+                // 这是从read中拿到的ClientChannel
                 client.write(CHARSET.encode("当前用户已存在，请重新输入用户名："));
             } else {
+                // 添加到在线用户中
                 onlineUsers.put(user, client);
                 //给通道定义一个表示符
                 /*
@@ -114,17 +120,20 @@ public class QQServer {
                         selectionKey.attach('zhangsan');
                         String zhangsan = selectionKey.attachment();
                  */
+                // key和user绑定
                 key.attach(user);
-                // `|`字符来作为消息之间的分割符
+                // `|`字符来作为消息之间的分割符，在客户端切分，防止粘包
                 client.write(CHARSET.encode("您的昵称通过验证 " + user + "|"));
                 String welCome = "\t欢迎'" + user + "'上线，当前在线人数" + onlineUsers.size() + "人。用户列表：" + onlineUsers.keySet().toString();
                 this.broadCast(welCome + "|");     //给所用用户推送上线信息，包括自己
             }
+            // 如果长度是3，是发送过来的聊天消息
         } else if (ms.length == 3) {
             String user_to = ms[0];
             String msg_body = ms[1];
             String user_from = ms[2];
 
+            // 发送到对应的名称的客户端
             SocketChannel channel_to = onlineUsers.get(user_to);
             if (channel_to == null) {
                 client.write(CHARSET.encode("用户'" + user_to + "'不存在，当前用户列表：" + onlineUsers.keySet().toString() + "\n"));
@@ -150,7 +159,7 @@ public class QQServer {
     //广播上线消息
     private void broadCast(String msg) throws IOException {
         Channel channel;
-        // 拿到所有复用选择器
+        // 拿到channel复用器中的所有channel
         for (SelectionKey k : selector.keys()) {
             // 拿到每个复用选择器的channel
             channel = k.channel();
