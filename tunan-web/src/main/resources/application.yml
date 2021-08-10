@@ -14,8 +14,8 @@ spring:
         show-sql: true
     datasource:
         username: root
-        password: root
-        url: jdbc:mysql://hadoop:3306/tunan
+        password: juan970907!@#
+        url: jdbc:mysql://aliyun:3306/study
         driver-class-name: com.mysql.jdbc.Driver
 
 
