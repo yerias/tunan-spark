@@ -39,9 +39,8 @@ public class ChannelSocketServer {
             selector.select();
             System.out.println("监听到事件,向下执行");
             //如果channel有数据了，将生成的key访入keys集合中
-            Set<SelectionKey> keys = selector.selectedKeys();
+            Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
             //得到这个keys集合的迭代器
-            Iterator<SelectionKey> iterator = keys.iterator();
             //使用迭代器遍历集合
             while (iterator.hasNext()) {
                 //得到集合中的一个key实例
@@ -55,11 +54,6 @@ public class ChannelSocketServer {
                 } else if (key.isReadable()) {
                     System.out.println("可读取");
                     doRead(key);
-                } else if (key.isWritable()) {
-                    System.out.println("可写出");
-                    doWrite(key);
-                }else if (key.isConnectable()) {
-                    System.out.println("连接成功！");
                 }
             }
         }
@@ -80,9 +74,8 @@ public class ChannelSocketServer {
         clientChannel.configureBlocking(false);
         // 将该通道注册到选择器上
         clientChannel.register(key.selector(), SelectionKey.OP_READ);
-        //将key对应Channel设置为准备接受其他请求
-        key.interestOps(SelectionKey.OP_ACCEPT);
-//        clientChannel.close();
+        //将key对应Channel设置为准备接受其他请求，这次对下一次感兴趣的还是OP_ACCEPT。可以不写
+//        key.interestOps(SelectionKey.OP_ACCEPT);
     }
 
     private void doRead(SelectionKey key) throws IOException {
@@ -93,40 +86,39 @@ public class ChannelSocketServer {
         // 读取数据
         try {
             int byteRead = clientChannel.read(buffer);
-            while(byteRead > 0){
+            if (byteRead > 0){
                 buffer.flip();
                 // 判断消息是否发送完成
                 byte[] data = new byte[buffer.limit()];
                 buffer.get(data);
                 String info = new String(data);
                 System.out.println("客户端发送过来的消息: "+info);
-                buffer.compact();
-                byteRead = clientChannel.read(buffer);
             }
-//            doWrite(clientChannel);
-            // 写完就把状态关注去掉，否则会一直触发写事件(改变自身关注事件)
-            key.interestOps(SelectionKey.OP_ACCEPT);
+            doWrite(clientChannel);
+            // 这里只能是OP_READ,这里对下一次感情兴的还是OP_READ，可以不写
+//            key.interestOps(SelectionKey.OP_READ);
         } catch (Exception e) {
             key.cancel();
             if (clientChannel != null) {
-                clientChannel.close();
+                key.channel().close();
             }
         }
     }
 
     //
     private void doWrite(SelectionKey key) throws IOException {
-        String info = "客户端你好！";
-        ByteBuffer buffer = ByteBuffer.allocate(BUFF_SIZE);
-        buffer.put(info.getBytes(StandardCharsets.UTF_8));
-        buffer.flip();
+        byte[] info = "服务器已连接！".getBytes();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(info.length);
+        byteBuffer.put(info);
+        byteBuffer.flip();
         SocketChannel clientChannel = (SocketChannel) key.channel();
-//        while (buffer.hasRemaining()) {
-//
-//        }
-        clientChannel.write(buffer);
-        buffer.clear();
-//        clientChannel.close();
+        clientChannel.write(byteBuffer);
+        if (!byteBuffer.hasRemaining()) {
+            System.out.println("服务器: 发送成功");
+        }
+        byteBuffer.clear();
+        // 这里是写事件，可以对下一次感情去的事件是OP_READ
+        key.interestOps(SelectionKey.OP_READ);
     }
 
     private void doWrite(SocketChannel sc) throws IOException {
@@ -136,7 +128,7 @@ public class ChannelSocketServer {
         byteBuffer.flip();
         sc.write(byteBuffer);
         if (!byteBuffer.hasRemaining()) {
-            System.out.println("服务器: 发送成功");
+            System.out.println("服务器: 发送成功22222");
         }
     }
 

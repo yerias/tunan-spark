@@ -1,6 +1,8 @@
 package com.tunan.java.nio.socket;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -32,7 +34,11 @@ public class ChannelSocketClient{
         // clientChannel注册到多路复用器
         clientChannel.register(selector, SelectionKey.OP_CONNECT);
 
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
         while(true){
+
+
             // 阻塞，等待客户端发起操作
             System.out.println("客户端阻塞中");
             selector.select();
@@ -54,6 +60,15 @@ public class ChannelSocketClient{
                     doRead(key);
                 }
             }
+//
+//            String line;
+//            while ((line = reader.readLine()) != null){
+//                if(line.equalsIgnoreCase("quit")){
+//                    break;
+//                }
+//                clientChannel.write(ByteBuffer.wrap(line.getBytes()));
+//            }
+//            reader.close();
         }
     }
 
@@ -80,6 +95,7 @@ public class ChannelSocketClient{
     }
 
     private void doRead(SelectionKey key) throws IOException {
+        byteBuffer.clear();
         // 从接受到的SelectionKey中拿到ClientChannel
         SocketChannel clientChannel = (SocketChannel) key.channel();
         // 从clientChannel中读取数据
