@@ -1,4 +1,4 @@
-package com.tunan.java.thread.primary;
+package com.tunan.java.thread.intermediate;
 
 /**
  * 同步代码块，锁住共享资源

@@ -1,4 +1,4 @@
-package com.tunan.java.thread.primary;
+package com.tunan.java.thread.intermediate;
 
 /**
  * 死锁 : 两个线程都在等待对方先完成，造成程序的停滞，一般程序的死锁都是在程序运行时出现的。
