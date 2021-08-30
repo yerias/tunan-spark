@@ -44,7 +44,8 @@ public class FutureTaskExample {
                 }
 
                 if (!task1.isDone()) {
-                    // 可能阻塞主线程
+
+                    // TODO 阻塞主线程
                     System.out.println("task1 输出: " + task1.get());
                 }
 
