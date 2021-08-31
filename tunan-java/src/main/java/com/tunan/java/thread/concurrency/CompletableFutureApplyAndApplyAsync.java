@@ -4,7 +4,10 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 
-public class CompletableFutureApply {
+/**
+ * 转换CompletableFuture的两种方式
+ */
+public class CompletableFutureApplyAndApplyAsync {
 
     public static void main(String[] args) {
         try {
@@ -15,6 +18,9 @@ public class CompletableFutureApply {
             e.printStackTrace();
         }
     }
+    // thenApplyAsync与thenApply的区别在于，
+    // 前者是将job2提交到线程池中异步执行，实际执行job2的线程可能是另外一个线程，
+    // 后者是由执行job1的线程立即执行job2，即两个job都是同一个线程执行的。
     public static void thenApply() throws ExecutionException, InterruptedException {
         ForkJoinPool pool=new ForkJoinPool();
 
