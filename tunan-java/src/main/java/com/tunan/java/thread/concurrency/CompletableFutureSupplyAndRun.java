@@ -3,7 +3,10 @@ package com.tunan.java.thread.concurrency;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class CompletableFutureAsync {
+/**
+ * 创建CompletableFuture的两种方式
+ */
+public class CompletableFutureSupplyAndRun  {
 
     public static void main(String[] args) {
 
