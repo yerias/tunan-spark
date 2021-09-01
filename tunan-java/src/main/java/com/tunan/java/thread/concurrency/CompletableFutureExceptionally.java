@@ -9,7 +9,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * 分开处理异常数据和正常数据
+ * TODO 异步回调
+ *  exceptionally方法指定某个任务执行异常时执行的回调方法，会将抛出异常作为参数传递到回调方法中，
+ *  如果该任务正常执行则会exceptionally方法返回的CompletionStage的result就是该任务正常执行的结果
  */
 public class CompletableFutureExceptionally {
 

@@ -6,7 +6,9 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 执行CompletableFuture的两种方式
+ * TODO 异步回调
+ * thenAccept 同 thenApply 接收上一个任务的返回值作为参数，但是无返回值；
+ * thenRun 的方法没有入参，也买有返回值。
  */
 public class CompletableFutureAcceptAndRun {
 

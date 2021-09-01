@@ -6,7 +6,11 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 同时捕获正常数据和异常数据，有返回值
+ * TODO 异步回调
+ *  同时捕获正常数据和异常数据，有返回值
+ *  跟whenComplete基本一致，区别在于handle的回调方法有返回值，
+ *  且handle方法返回的CompletableFuture的result是回调方法的执行结果或者回调方法执行期间抛出的异常，
+ *  与原始CompletableFuture的result无关了。
  */
 public class CompletableFutureHandle {
     private static final ForkJoinPool pool = new ForkJoinPool();

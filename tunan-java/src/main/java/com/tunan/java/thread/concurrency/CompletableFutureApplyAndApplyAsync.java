@@ -5,7 +5,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 
 /**
- * 转换CompletableFuture的两种方式
+ * TODO 异步回调
+ *  thenApply 表示某个任务执行完成后执行的动作，即回调方法，
+ *  会将该任务的执行结果即方法返回值作为入参传递到回调方法中
  */
 public class CompletableFutureApplyAndApplyAsync {
 

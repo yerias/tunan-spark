@@ -6,7 +6,11 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 同时捕获正常数据和异常数据，不能返回结果值
+ * TODO 异步回调
+ *  同时捕获正常数据和异常数据，不能返回结果值
+ *  whenComplete是当某个任务执行完成后执行的回调方法，会将执行结果或者执行期间抛出的异常传递给回调方法，
+ *  如果是正常执行则异常为null，回调方法对应的CompletableFuture的result和该任务一致，
+ *  如果该任务正常执行，则get方法返回执行结果，如果是执行异常，则get方法抛出异常。
  */
 public class CompletableFutureWhenComplete {
 

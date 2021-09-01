@@ -4,7 +4,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 /**
- * 创建CompletableFuture的两种方式
+ * TODO 创建异步任务
+ *  创建CompletableFuture的两种方式
  */
 public class CompletableFutureSupplyAndRun  {
 

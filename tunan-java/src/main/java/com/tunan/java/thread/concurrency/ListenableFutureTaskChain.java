@@ -7,6 +7,9 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 作业链
+ */
 public class ListenableFutureTaskChain {
 
     private static final ListeningExecutorService executorService = MoreExecutors.listeningDecorator(
