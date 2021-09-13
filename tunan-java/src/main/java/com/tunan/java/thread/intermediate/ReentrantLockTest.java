@@ -13,7 +13,7 @@ public class ReentrantLockTest {
 
         for (int i = 0; i < 3; i++) {
             try {
-
+                // something
             } finally {
                 lock.unlock();
             }

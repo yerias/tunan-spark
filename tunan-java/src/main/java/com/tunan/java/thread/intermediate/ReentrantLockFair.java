@@ -13,7 +13,7 @@ public class ReentrantLockFair {
         }
     }
 
-    static class FairLock implements Runnable{
+    static class FairLock implements Runnable {
 
         Integer id;
 
@@ -32,8 +32,11 @@ public class ReentrantLockFair {
 
             for (int i = 0; i < 2; i++) {
                 lock.lock();
-                System.out.println(Thread.currentThread().getId()+"获得锁的线程："+id);
-                lock.unlock();
+                try {
+                    System.out.println(Thread.currentThread().getId() + "获得锁的线程：" + id);
+                } finally {
+                    lock.unlock();
+                }
             }
         }
     }

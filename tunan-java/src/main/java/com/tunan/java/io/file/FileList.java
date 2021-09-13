@@ -31,21 +31,22 @@ public class FileList {
             System.out.println(f);
         }
     }
-}
-class DirFilter implements FilenameFilter{
+    static class DirFilter implements FilenameFilter{
 
-    public Pattern pattern;
+        public Pattern pattern;
 
-    public DirFilter(String regex){
-        pattern = Pattern.compile(regex);
+        public DirFilter(String regex){
+            pattern = Pattern.compile(regex);
+        }
+
+        // dir 是文件的路径，name 是文件的名字
+        @Override
+        public boolean accept(File dir, String name) {
+            System.out.println(dir + "   "+name);
+            return pattern.matcher(name).matches();
+        }
     }
-
-    // dir 是文件的路径，name 是文件的名字
-    @Override
-    public boolean accept(File dir, String name) {
-        System.out.println(dir + "   "+name);
-        return pattern.matcher(name).matches();
-    }
 }
+
 
 
