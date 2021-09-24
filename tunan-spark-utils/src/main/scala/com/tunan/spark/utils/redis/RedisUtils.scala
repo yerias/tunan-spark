@@ -23,7 +23,7 @@ object RedisUtils {
   poolConfig.setTestOnBorrow(TESTONBORROW)
   poolConfig.setTestOnReturn(TESTONRETURN)
 
-  def pool = new JedisPool(poolConfig,HOSTNAME,PORT)
+  private def pool = new JedisPool(poolConfig,HOSTNAME,PORT)
 
   // 拿到jedis客户端
   def getJedis: Jedis = pool.getResource
