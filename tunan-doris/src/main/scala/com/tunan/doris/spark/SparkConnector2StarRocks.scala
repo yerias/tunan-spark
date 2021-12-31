@@ -18,11 +18,11 @@ import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 
 /**
-* @Description spark按分区数批量提交到数据库
-* @Date 8:32 2021/12/31
-* @Param
-* @return
-**/
+ * @Description spark按分区数批量提交到数据库
+ * @Date 8:32 2021/12/31
+ * @Param
+ * @return
+ * */
 object SparkConnector2StarRocks {
     // parameters
     val starRocksName = "test"
@@ -65,7 +65,8 @@ object SparkConnector2StarRocks {
                 val sink = new MySrSink(Map(
                     "max_filter_ratio" -> s"${filterRatio}",
                     "columns" -> columns,
-                    "column_separator" -> Consts.starrocksSep),
+                    "column_separator" -> Consts.starrocksSep,
+                    "strict_mode" -> "false"),
                     starRocksName,
                     userName,
                     password,
