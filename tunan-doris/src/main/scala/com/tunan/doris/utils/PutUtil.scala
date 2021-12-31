@@ -17,7 +17,7 @@ object PutUtil {
   var CONTENT_TYPE = s"text/plain; charset=${CHARSET}"
   var TIMEOUT = 30000
   var userName = "root"
-  var password = ""
+  var password = "root"
 
   def basicAuthHeader( username:String,  password:String):String =  {
       val  tobeEncode:String = username + ":" + password
