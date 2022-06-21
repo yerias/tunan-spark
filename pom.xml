@@ -33,7 +33,7 @@
         <scala.version>2.12.10</scala.version>
         <scala.tools.version>2.12</scala.tools.version>
         <spark.version>2.4.5</spark.version>
-        <mysql.jdbc.version>5.1.38</mysql.jdbc.version>
+        <mysql.jdbc.version>8.0.28</mysql.jdbc.version>
         <scalikejdbc.version>2.5.2</scalikejdbc.version>
         <jedis.version>2.9.0</jedis.version>
         <config.version>1.2.1</config.version>
