@@ -29,7 +29,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <hadoop.version>2.6.0-cdh5.16.2</hadoop.version>
+        <hadoop.version>2.7.0</hadoop.version>
         <scala.version>2.12.10</scala.version>
         <scala.tools.version>2.12</scala.tools.version>
         <spark.version>2.4.5</spark.version>
